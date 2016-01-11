@@ -1,6 +1,6 @@
 title: 嵌套删除SQL引起的死锁问题分析
 date: 2015-12-19 18:03:53
-tags: DeadLock
+tags: [MySQL,DeadLock]
 ---
 # 问题背景
 应用系统后台有两个计划任务
