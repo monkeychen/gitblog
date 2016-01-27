@@ -45,7 +45,7 @@ tags: [php,laravel]
 # 路由参数(占位符)
 
 Laravel中路由规则配置中的URL中允许设置参数(占位符)，便于闭包或控制器方法提取与引用。Laravel的路由URL中参数占位符配置方式分两种：必选与可选。
- >这种机制蛮适合开发符合RESTful规范的应用，这里有一篇由《黑客与画家》、《软件随想录》译者阮一峰写的介绍REFTful概念的文章： [理解RESTful架构](http://www.ruanyifeng.com/blog/2011/09/restful)
+ >这种机制蛮适合开发符合RESTful规范的应用，这里有一篇由《黑客与画家》、《软件随想录》译者阮一峰写的介绍RESTful概念的文章： [理解RESTful架构](http://www.ruanyifeng.com/blog/2011/09/restful)
 
 **必选参数占位符**
 
