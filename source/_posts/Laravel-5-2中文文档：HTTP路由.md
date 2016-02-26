@@ -66,8 +66,6 @@ Laravel中路由规则配置中的URL中允许设置参数(占位符)，便于�
 
 **可选参数占位符**
 
-Occasionally you may need to specify a route parameter, but make the presence of that route parameter optional. You may do so by placing a ? mark after the parameter name. Make sure to give the route's corresponding variable a default value:
-
 如果想让路由参数占位符是可选的（有时请求URL中的占位符部分可能是空的），此时可以在占位符名称的后面加上一个问号"?"即可。
 
     Route::get('user/{name?}', function ($name = null) {
@@ -82,4 +80,51 @@ Occasionally you may need to specify a route parameter, but make the presence of
 
 # 命名路由
 
-\---待续
+命名路由将允许你方便的生成URL或重定向URL，这些生成的URL最终将匹配该路由规则。你可通过如下方式定义命名路由：
+
+    Route::get('profile', ['as' => 'profile', function () {
+        //
+    }]);
+
+闭包函数的第二个数组参数的元素键值需要指定为"as"，元素值即为路由规则名。当然，你也可以为控制器的方法来代替上面的闭包函数，如下：
+
+    Route::get('profile', [
+        'as' => 'profile', 'uses' => 'UserController@showProfile'
+    ]);
+
+定义命名路由还有如下方式：
+
+    Route::get('user/profile', 'UserController@showProfile')->name('profile');
+
+即先定义一个普通路由，然后再调用该路由规则实例的name方法。
+
+**路由组与命名路由**
+
+如果你正在使用路由规则组时，你可以在路由规则组定义的属性数组中添加一个key为"as"，值为某字符串的元素，该元素的值将作为该路由组中包含的路由名字的前缀。如下：
+
+    Route::group(['as' => 'admin::'], function () {
+        Route::get('dashboard', ['as' => 'dashboard', function () {
+            // Route named "admin::dashboard"
+        }]);
+    });
+
+**生成匹配命名路由的URL**
+
+一旦你已经为某一路由起了相应的名字，那么你就可以通过全局函数`route`来生成相应的URL：
+
+    // Generating URLs...
+    $url = route('profile');
+    
+    // Generating Redirects...
+    return redirect()->route('profile');
+
+如果命名路由规则的URL部分包含参数占位符，则你可以将参数值作为`route`函数的第二个数组参数的元素传入，框架将自动用该参数值代替占位符以生成相应的URL。
+
+    Route::get('user/{id}/profile', ['as' => 'profile', function ($id) {
+        //
+    }]);
+
+    $url = route('profile', ['id' => 1]);
+
+# 路由组
+
