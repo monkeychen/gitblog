@@ -62,6 +62,7 @@ pagination_dir: page
 
 # Extensions
 ## Plugins: http://hexo.io/plugins/
+
 ## Themes: http://hexo.io/themes/
 theme: jacman
 stylus:
@@ -93,3 +94,9 @@ feed:
     type: atom ##feed类型 atom或者rss2
     path: atom.xml ##feed路径
     limit: 20  ##feed文章最小数量
+	
+# hexo sitemap网站地图
+sitemap:
+    path: sitemap.xml
+baidusitemap:
+    path: baidusitemap.xml
