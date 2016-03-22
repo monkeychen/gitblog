@@ -59,7 +59,7 @@ select job_execution_id from t_batch_job_execution as job, t_batch_plan_executio
 ```
 UPDATE T_BATCH_JOB_EXECUTION set START_TIME = '2015-09-14 03:00:06', END_TIME = '2015-09-14 03:00:10',  STATUS = 'COMPLETED', CONTINUABLE = 'N', EXIT_CODE = 'COMPLETED', EXIT_MESSAGE = '', VERSION = 4, CREATE_TIME = '2015-09-14 03:00:06' where JOB_EXECUTION_ID = 435431
 ```
-需要对T_BATCH_JOB_EXECUTION表指定行申请加上排它锁【X锁】；在加【X锁】前，INNODB存储引擎会先隐式申请该行的意向排它锁【IX锁】；由于该行已经被【事务2】加上【S锁】，但是【IX锁】与【S锁】是兼容的，因此【事务2】对该行加【IX锁】成功，而【X锁】与【S锁】会冲突，因此本事务就处理等待【X锁】状态，可从死锁日志得到验证
+需要对T_BATCH_JOB_EXECUTION表指定行申请加上排它锁【X锁】；在加【X锁】前，INNODB存储引擎会先隐式申请该行的意向排它锁【IX锁】；由于该行已经被【事务2】加上【S锁】，但是【IX锁】与【S锁】是兼容的，因此【事务1】对该行加【IX锁】成功，而【X锁】与【S锁】会冲突，因此本事务就处于等待【X锁】状态，可从死锁日志得到验证
 ```
 *** (1) WAITING FOR THIS LOCK TO BE GRANTED:RECORD LOCKS space id 101740 page no 388 n bits 240 index `PRIMARY` of table `emp`.`t_batch_job_execution` trx id 209F80FE lock_mode X locks rec but not gap waiting
 ```
