@@ -16,7 +16,9 @@ keywords: [Java, JNI, Memory Leak, 内存泄漏]
 3. 此时忽然想起，java.exe进程异常退出应该会生成相关的hs_err<pid>.log文件，果然在应用目录下找到了一堆错误文件。该日志也叫crash日志。 
 4. 通过查看hs_err<pid>.log内容得知，原来是jni ping引入的dll调用异常导致java.exe进程异常中止了。
  > PS：如果能早点想起步骤3，那就不用浪费步骤2的功夫了。
+ 
 <!--more-->
+
 # JNI调用异常分析
 JNI异常导致java进程中止的原因可能为
 
