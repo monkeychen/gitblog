@@ -23,7 +23,7 @@ keywords: [php,apache2,PhpStorm]
 		sudo vim username.conf  
 
 3. 在`username.conf`文件中添加如下内容：  
-￼	![username.conf内容](/img/username_conf.png)  
+	![username.conf内容](/img/username_conf.png)  
 4. 检查`username.conf`文件的权限是否正确，正确的应该为：
 
 		-rw-r--r--  1 root  wheel  126 Mar 23 23:02 username.conf  
@@ -71,7 +71,37 @@ keywords: [php,apache2,PhpStorm]
 
 9. 配置虚拟主机(vhost)  
 
-		待补充。。。
+```
+<VirtualHost *:80>
+    ServerAdmin admin@simiam.vhost.com
+    DocumentRoot "/Users/chenzhian/workspace/php/website/public"
+    ServerName simiam.vhost.com
+    DirectoryIndex main.php index.php index.html
+    <Directory "/Users/chenzhian/workspace/php/website/public">
+	Options FollowSymLinks Multiviews
+	MultiviewsMatch Any
+	AllowOverride All
+	Require all granted
+    </Directory>
+    ErrorLog "/private/var/log/apache2/simiam.vhost.com-error_log"
+    CustomLog "/private/var/log/apache2/simiam.vhost.com-access_log" common
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerAdmin admin@100.vhost.com
+    DocumentRoot "/Users/chenzhian/workspace/php/website/100"
+    ServerName 100.vhost.com
+    DirectoryIndex index.php index.html
+        <Directory "/Users/chenzhian/workspace/php/website/100">
+	        Options FollowSymLinks Multiviews
+		MultiviewsMatch Any
+		AllowOverride All
+		Require all granted
+	</Directory>
+    ErrorLog "/private/var/log/apache2/100.vhost.com-error_log"
+    CustomLog "/private/var/log/apache2/100.vhost.com-access_log" common
+</VirtualHost>
+```
 
 
 # 修改或创建php.ini
@@ -101,10 +131,12 @@ keywords: [php,apache2,PhpStorm]
 		xdebug.remote_enable=1
 		xdebug.remote_mode="req"
 		xdebug.remote_log="/var/log/xdebug.log"
-		xdebug.remote_host=localhost/127.0.0.1
+		xdebug.remote_host=127.0.0.1
 		xdebug.remote_port=9000
 		xdebug.remote_handler="dbgp"
 		xdebug.idekey="PhpStorm"
+
+> xdebug.remote_host的值建议设置为127.0.0.1，而不要设置为localhost（当开启调试模式时，可能会出现域名解析很慢的问题）
 
 # 安装并配置PhpStorm
 
@@ -117,3 +149,5 @@ keywords: [php,apache2,PhpStorm]
 		IDE key:PhpStorm (与php.ini中xdebug配置项xdebug.idekey一致)  
 		Host:localhost  (apache服务地址)  
 		Port:80 (apache服务端口)  
+
+
