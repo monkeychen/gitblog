@@ -23,7 +23,10 @@ keywords: [php,apache2,PhpStorm]
 		sudo vim username.conf  
 
 3. 在`username.conf`文件中添加如下内容：  
-	![username.conf内容](/img/username_conf.png)  
+	![username.conf内容](/img/username_conf.png)
+
+<!--more-->
+
 4. 检查`username.conf`文件的权限是否正确，正确的应该为：
 
 		-rw-r--r--  1 root  wheel  126 Mar 23 23:02 username.conf  
@@ -149,5 +152,3 @@ keywords: [php,apache2,PhpStorm]
 		IDE key:PhpStorm (与php.ini中xdebug配置项xdebug.idekey一致)  
 		Host:localhost  (apache服务地址)  
 		Port:80 (apache服务端口)  
-
-
