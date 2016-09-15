@@ -127,11 +127,49 @@ $loader->add('Acme\\Test\\', __DIR__);
 ```
 
 ## 三、库
+不重复造轮子，这是大伙天天喊的，因为社区已经为大伙提供了很多可直接引用的轮子，这些轮子的学名就叫“库”。如果你觉得自己的项目可以帮到别人，你可以选择将其打包成库，并大告天下。你只要按如下步骤操作就行：
 
+1. 为项目的composer.json添加name属性 [必需]
+2. 发布至git等版本管理系统或[packagist][3]
 
-未完[待续][2]
+> * composer.json中还有一个`version`属性，但一般不建议设置，因为composer会根据tag标签自行推算版本号，如果项目代码为master，则版本会被推算为`dev-master`
+> * packagist可理解为一个公共的组件仓库，类似maven中央库
+> * 对于未发布至packagist库的组件，引用方需要指定`repositories`
+
+比如，假如我们将项目发布至[Github](https://github.com/monkeychen/simiam)下，项目的`composer.json`如下：
+
+```
+{
+    "name": "simiam/composer-demo",
+    "require": {
+        "monolog/monolog": "1.0.*"
+    }
+}
+```
+接下来，我们的另一个项目blog需要引用上面发布的`simiam/composer-demo`组件，则blog项目的`composer.json`内容如下：
+
+```
+{
+    "name": "simiam/blog",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/monkeychen/simiam"
+        }
+    ],
+    "require": {
+        "simiam/composer-demo": "dev-master"
+    }
+}
+```
+
+> 因为我们发布的是master分支，所以`require`中依赖的版本号为`dev-master`
+> 如果组件已经发布至packagist的话，则不需要声明`repositories`，因为composer默认会从中央库中搜索。
+
+更详细的信息，可以参考[这里][2]。
 
 [1]: https://getcomposer.org/doc/
 [2]: https://getcomposer.org/doc/02-libraries.md
+[3]: https://packagist.org/
 
 
