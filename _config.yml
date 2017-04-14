@@ -7,7 +7,7 @@ title: Simiam
 subtitle: 求知若渴，虚怀若谷
 description: 
 author: simiam
-language: zh-CN
+language: zh-Hans
 timezone: UTC
 
 # URL
@@ -49,7 +49,7 @@ future: true
 highlight:
   enable: true
   line_number: true
-  auto_detect: false
+  auto_detect: true
   tab_replace:
 
 # Category & Tag
@@ -73,7 +73,7 @@ pagination_dir: page
 ## Plugins: http://hexo.io/plugins/
 
 ## Themes: http://hexo.io/themes/
-theme: jacman
+theme: next
 stylus:
   compress: true
 
