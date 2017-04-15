@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------
 
 # Put your favicon.ico into `hexo-site/source/` directory.
-favicon: /favicon.ico
+favicon: /icon.png
 
 # Set default keywords (Use a comma to separate)
 keywords: "Java, Python, Go, Php"
@@ -11,13 +11,13 @@ keywords: "Java, Python, Go, Php"
 # Set rss to false to disable feed link.
 # Leave rss as empty to use site's feed link.
 # Set rss to specific value if you have burned your feed already.
-rss:
+rss: false
 
 # Specify the date when the site was setup
 since: 2015
 
 # icon between year and author @Footer
-authoricon: heart
+authoricon: cloud
 
 # Footer `powered-by` and `theme-info` copyright
 copyright: false
@@ -206,6 +206,7 @@ links_layout: inline
 links:
   Simiam: http://simiam.com
   并发编程网: http://ifeve.com
+  Readhub: https://readhub.me
 
 
 # ---------------------------------------------------------------
