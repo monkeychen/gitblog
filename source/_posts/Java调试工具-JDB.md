@@ -130,3 +130,7 @@ exit（或 quit）            -- 退出调试器
 	```
 
 这样就可以进入JDB的DEBUG环境了，你可以通过stop命令创建断点，通过next命令单行调试，通过step命令单步调试，通过step up命令返回至上层调用点等，具体使用网上一堆参考资料。
+
+
+> 转载请注明出处：[cloudnoter.com](http://cloudnoter.com)
+

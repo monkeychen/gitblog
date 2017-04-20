@@ -5,14 +5,14 @@
 # Site
 title: Simiam
 subtitle: 求知若渴，虚怀若谷
-description: 
+description:
 author: simiam
 language: zh-Hans
 timezone: UTC
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://tech.simiam.com
+url: http://cloudnoter.com
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -83,7 +83,7 @@ deploy:
   type: git
   repository: git@github.com:monkeychen/monkeychen.github.io.git
   branch: master
-  
+
 # Others
 index_generator:
   per_page: 5 ##首页默认10篇文章标题 如果值为0不分页
@@ -96,14 +96,14 @@ archive_generator:
 tag_generator:
     per_page: 0 ##标签分类页面默认10篇文章
 
-category_generator: 
+category_generator:
     per_page: 0 ###分类页面默认10篇文章
 
 feed:
     type: atom ##feed类型 atom或者rss2
     path: atom.xml ##feed路径
     limit: 20  ##feed文章最小数量
-	
+
 # hexo sitemap网站地图
 sitemap:
     path: sitemap.xml

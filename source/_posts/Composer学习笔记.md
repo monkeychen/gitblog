@@ -168,6 +168,8 @@ $loader->add('Acme\\Test\\', __DIR__);
 
 更详细的信息，可以参考[这里][2]。
 
+> 转载请注明出处：[cloudnoter.com](http://cloudnoter.com)
+
 [1]: https://getcomposer.org/doc/
 [2]: https://getcomposer.org/doc/02-libraries.md
 [3]: https://packagist.org/

@@ -21,6 +21,8 @@ CREATE TABLE "ipms_device_feature" (
 )
 ```
 
+<!--more-->
+
 * 运行如下脚本查看字段详细信息
 
 ```
@@ -57,5 +59,32 @@ for(Map row : rows) {
 
 这样的话，Java变更`features`就是正常的中文，就可以直接回传给前端页面了。
 
-## 2. 待续...
+## 2. 几个容易踩的坑
+### 2.1. `Integer`对象之间比较的坑
+对于`Integer var=?`在`-128`至`127`之间的赋值，`Integer` 对象是在`IntegerCache.cache`产生，会复用已有对象，这个区间内的`Integer`值可以直接使用==进行判断，但是这个区间之外的所有数据，都会在堆上产生，并不会复用已有对象。因此建议`Integer`对象在比较时应使用`equals`方法。
+
+### 2.2. `ArrayList`的`subList()`方法返回值的坑
+`ArrayList`的`subList`方法返回的结果不可强转成`ArrayList`，否则会抛出`ClassCastException`异常：
+
+```
+java.util.RandomAccessSubList cannot be cast to java.util.ArrayList;
+```
+
+因为`subList`方法返回的是`ArrayList`的内部类`SubList`，并不是`ArrayList`，而是`ArrayList`的一个视图，对于内部类`SubList`的所有操作最终会反映到原列表上。
+
+### 2.3. `Arrays.asList()`方法返回值的坑
+使用工具类`Arrays.asList()`把数组转换成集合时，不能使用其修改集合相关的方法，它的 `add/remove/clear`方法会抛出`UnsupportedOperationException`异常。因为`asList`方法的返回对象是一个`Arrays`内部类，并没有实现集合的修改方法。`Arrays.asList`体现的是适配器模式，只是转换接口，后台的数据仍是数组。
+ 
+ ```
+ String[] str = new String[] { "a", "b" };
+ List list = Arrays.asList(str);
+ list.add("c"); // 运行时异常。
+ str[0]= "gujin"; // 则list.get(0)也会随之修改。
+ ```
+ 
+## 3. 待续...
+
+
+> 转载请注明出处：[cloudnoter.com](http://cloudnoter.com)
+
 

@@ -32,6 +32,9 @@ ListCommand.php
 
 2.[phpstorm laravel live template][3]
 
+> 转载请注明出处：[cloudnoter.com](http://cloudnoter.com)
+
   [1]: https://confluence.jetbrains.com/display/PhpStorm/Laravel+Development+using+PhpStorm
   [2]: https://github.com/symfony/console/commit/6d6d9031b9148fed0e2aacb98ac23ce6168ba7ac
   [3]:https://github.com/koomai/phpstorm-laravel-live-templates
+

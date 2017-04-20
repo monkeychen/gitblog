@@ -87,5 +87,9 @@ delete from t_batch_step_execution where job_execution_id in (select job_executi
 1. [MySQL加锁处理分析][2]
 
 
+> 转载请注明出处：[cloudnoter.com](http://cloudnoter.com)
+
+
   [1]: http://dev.mysql.com/doc/refman/5.7/en/innodb-locks-set.html
   [2]: http://hedengcheng.com/?p=771
+

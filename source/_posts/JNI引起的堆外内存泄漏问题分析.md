@@ -44,7 +44,10 @@ JNI异常导致java进程中止的原因可能为
 # 总结
 该问题并非通用性问题，写这篇文章主要是为了记录下当时解决该问题的整个定位过程，文中一些知识点可能表述有误，还请批评指正。
 
+> 转载请注明出处：[cloudnoter.com](http://cloudnoter.com)
+
 [1]: http://lovestblog.cn/blog/2015/08/21/rssxmx/
 [2]: http://lovestblog.cn/blog/2015/05/12/direct-buffer/
 [3]: https://www.zhihu.com/question/19647750
 [4]: http://www.cnblogs.com/skynet/archive/2011/02/20/1959162.html
+
