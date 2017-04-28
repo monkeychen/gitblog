@@ -113,15 +113,15 @@ Step 8. 让apache支持php脚本
 
 > 如果能显示php环境信息，则说明php环境搭建成功  
 
-Step 9. 配置虚拟主机(vhost) 
- 
-  * 将/etc/apache2/httpd.conf文件中的如下内容前的'#'删除:
+Step 9. 配置虚拟主机(vhost)
+
+* 将/etc/apache2/httpd.conf文件中如下内容的`#`去掉
 
 ```
 #Include /private/etc/apache2/extra/httpd-vhosts.conf
 ```
 
-  * 修改/etc/apache2/extra/httpd-vhosts.conf:
+* 修改/etc/apache2/extra/httpd-vhosts.conf:
 
 ```
 <VirtualHost *:80>
@@ -201,9 +201,9 @@ Step 2. 在`php.ini`文件最后添加如下内容以启用xdebug扩展:
 Step 1. 配置php解释器:直接在**`Preferences`**的**`Languages->PHP`**页面添加php命令路径:
 
 ```
-		/usr/bin/php 
+		/usr/bin/php
 ```
- 
+
 Step 2. 配置debug  
 	在**`PHP->Debug->DBGp`**中添加如下信息:
 
@@ -215,4 +215,3 @@ Step 2. 配置debug
 
 
 > 转载请注明出处：[cloudnoter.com](http://cloudnoter.com)
-

@@ -11,7 +11,7 @@ keywords: "Java, Python, Go, Php"
 # Set rss to false to disable feed link.
 # Leave rss as empty to use site's feed link.
 # Set rss to specific value if you have burned your feed already.
-rss: false
+rss: 
 
 # Specify the date when the site was setup
 since: 2015
@@ -283,8 +283,8 @@ highlight_theme: night
 
 # MathJax Support
 mathjax:
-  enable: false
-  per_page: false
+  enable: true
+  per_page: true
   cdn: //cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 
 
@@ -306,8 +306,8 @@ disqus:
 # Hypercomments
 #hypercomments_id:
 
-# Gentie productKey
-gentie_productKey: f310f312511948d2b2c4b6e8a5f9c6c7
+# Gentie productKey f310f312511948d2b2c4b6e8a5f9c6c7
+gentie_productKey: 
 
 # changyan
 changyan:
@@ -428,7 +428,7 @@ busuanzi_count:
 
 
 # Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO
-baidu_push: false
+baidu_push: true
 
 # Google Calendar
 # Share your recent schedule to others via calendar page
@@ -460,7 +460,7 @@ algolia_search:
 
 # Local search
 local_search:
-  enable: false
+  enable: true
 
 # External URL with BASE64 encrypt & decrypt
 # Usage: {% exturl text url "title" %}
