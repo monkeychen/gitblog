@@ -13,35 +13,36 @@ Pacemaker的管理工具主要有两种：crmsh、pcs(Pacemaker/Corosync configu
 
 <!--More-->
 
-# General Operations
+# 通用操作
 
-## Display the configuration
+## 显示配置信息
+以XML格式显示
 
     crmsh # crm configure show xml
     pcs   # pcs cluster cib
 
-To show a simplified (non-xml) syntax
+以非XML格式显示[To show a simplified (non-xml) syntax]
 
     crmsh # crm configure show
     pcs   # pcs config
     
-## Display the current status
+## 显示集群当前状态
 
     crmsh # crm status
     pcs   # pcs status
 
-also
+也可以这样：
 
     # crm_mon -1
 
-## Node standby
+## 挂起节点（Node standby）
 
-Put node in standby
+使节点进入Standby状态（Put node in standby）
 
     crmsh # crm node standby pcmk-1
     pcs   # pcs cluster standby pcmk-1
 
-Remove node from standby
+使节点从Standby状态恢复（Remove node from standby）
 
     crmsh # crm node online pcmk-1
     pcs   # pcs cluster unstandby pcmk-1
@@ -49,19 +50,19 @@ Remove node from standby
 crm has the ability to set the status on reboot or forever. 
 pcs can apply the change to all the nodes.
 
-## Set cluster property
+## 设置集群全局属性
 
     crmsh # crm configure property stonith-enabled=false
     pcs   # pcs property set stonith-enabled=false
 
-# Resource manipulation
+# 集群资源处理操作
 
-## List Resource Agent (RA) classes
+## 列出所有RA(Resource Agent)的类别:`classes`
 
     crmsh # crm ra classes
     pcs   # pcs resource standards
 
-## List available RAs
+## 列出所有可用的RA
 
     crmsh # crm ra list ocf
     crmsh # crm ra list lsb
@@ -73,12 +74,12 @@ pcs can apply the change to all the nodes.
     pcs   # pcs resource agents stonith
     pcs   # pcs resource agents
 
-You can also filter by provider
+您也可以通过`provider`进一步过滤：
 
     crmsh # crm ra list ocf pacemaker
     pcs   # pcs resource agents ocf:pacemaker
 
-## List RA info
+## 查询具体RA的描述信息
 
     crmsh # crm ra meta IPaddr2
     pcs   # pcs resource describe IPaddr2
@@ -89,7 +90,7 @@ You can also use the full class:provider:RA format if multiple RAs with the same
     crmsh # crm ra meta ocf:heartbeat:IPaddr2
     pcs   # pcs resource describe ocf:heartbeat:IPaddr2
 
-## Create a resource
+## 创建资源
 
     crmsh # crm configure primitive ClusterIP ocf:heartbeat:IPaddr2 \
             params ip=192.168.122.120 cidr_netmask=32 \
@@ -99,7 +100,7 @@ You can also use the full class:provider:RA format if multiple RAs with the same
 The standard and provider (`ocf:heartbeat`) are determined automatically since `IPaddr2` is unique.
 The monitor operation is automatically created based on the agent's metadata.
 
-## Display a resource
+## 显示资源配置信息
 
     crmsh # crm configure show
     pcs   # pcs resource show
@@ -112,34 +113,34 @@ The result can be filtered by supplying a resource name (IE `ClusterIP`):
 
 crmsh also displays fencing resources. 
 
-## Display fencing resources
+## 显示fencing资源
 
     crmsh # crm resource show
     pcs   # pcs stonith show
 
 pcs treats STONITH devices separately.
 
-## Display Stonith RA info
+## 显示Stonith资源代码(RA)信息
 
     crmsh # crm ra meta stonith:fence_ipmilan
     pcs   # pcs stonith describe fence_ipmilan
 
-## Start a resource
+## 启动资源
 
     crmsh # crm resource start ClusterIP
     pcs   # pcs resource enable ClusterIP
 
-## Stop a resource
+## 停止资源
 
     crmsh # crm resource stop ClusterIP
     pcs   # pcs resource disable ClusterIP
 
-## Remove a resource
+## 删除资源
 
     crmsh # crm configure delete ClusterIP
     pcs   # pcs resource delete ClusterIP
 
-## Modify a resource
+## 更新资源
 
     crmsh # crm resource param ClusterIP set clusterip_hash=sourceip
     pcs   # pcs resource update ClusterIP clusterip_hash=sourceip
@@ -157,32 +158,32 @@ edited and verified before committing to the live configuration.
     crmsh # verify
     crmsh # commit
 
-## Delete parameters for a given resource
+## 删除给定资源上的属性信息
 
     crmsh # crm resource param ClusterIP delete nic
     pcs   # pcs resource update ClusterIP ip=192.168.0.98 nic=  
 
-## List the current resource defaults
+## 列出资源的默认属性信息
 
     crmsh # crm configure show type:rsc_defaults
-    pcs   # pcs resource rsc defaults
+    pcs   # pcs resource defaults
 
-## Set resource defaults
+## 设置资源的默认属性信息
 
     crmsh # crm configure rsc_defaults resource-stickiness=100
-    pcs   # pcs resource rsc defaults resource-stickiness=100
+    pcs   # pcs resource defaults resource-stickiness=100
     
-## List the current operation defaults
+## 列出资源操作命令相关属性的默认值
 
     crmsh # crm configure show type:op_defaults
     pcs   # pcs resource op defaults
 
-## Set operation defaults
+## 设置资源操作命令相关属性的默认值
 
     crmsh # crm configure op_defaults timeout=240s
     pcs   # pcs resource op defaults timeout=240s
 
-## Set Colocation
+## 设置Colocation约束
 
     crmsh # crm configure colocation website-with-ip INFINITY: WebSite ClusterIP
     pcs   # pcs constraint colocation add ClusterIP with WebSite INFINITY
@@ -192,7 +193,7 @@ With roles
     crmsh # crm configure colocation another-ip-with-website inf: AnotherIP WebSite:Master
     pcs   # pcs constraint colocation add Started AnotherIP with Master WebSite INFINITY
 
-## Set ordering
+## 设置ordering约束
 
     crmsh # crm configure order apache-after-ip mandatory: ClusterIP WebSite
     pcs   # pcs constraint order ClusterIP then WebSite
@@ -202,7 +203,7 @@ With roles:
     crmsh # crm configure order ip-after-website Mandatory: WebSite:Master AnotherIP
     pcs   # pcs constraint order promote WebSite then start AnotherIP
 
-## Set preferred location
+## 设置preferred location约束
 
     crmsh # crm configure location prefer-pcmk-1 WebSite 50: pcmk-1
     pcs   # pcs constraint location WebSite prefers pcmk-1=50
@@ -212,7 +213,7 @@ With roles:
     crmsh # crm configure location prefer-pcmk-1 WebSite rule role=Master 50: \#uname eq pcmk-1
     pcs   # pcs constraint location WebSite rule role=master 50 \#uname eq pcmk-1
 
-## Move resources
+## 移动资源至指定节点（Move resources）
 
     crmsh # crm resource move WebSite pcmk-1
     pcs   # pcs resource move WebSite pcmk-1
@@ -230,26 +231,30 @@ Remember that moving a resource sets a stickyness to -INF to a given node until 
 ## Resource tracing
 
     crmsh # crm resource trace Website
+    # pcs不支持
 
-## Clear fail counts
+## 清理指定资源的失败计数信息（Clear fail counts）
 
     crmsh # crm resource cleanup Website
     pcs   # pcs resource cleanup Website
 
-## Edit fail counts
+## 编辑Edit fail counts
 
     crmsh # crm resource failcount Website show pcmk-1
     crmsh # crm resource failcount Website set pcmk-1 100
+    
+    # pcs不支持
 
 ## Handling configuration elements by type
 
 pcs deals with constraints differently. These can be manipulated by the command above as well as the following and others
 
-    pcs   # pcs constraint list --full
+    # 下面这行命令的list可以省略，使用full选项是为了显示相关的id
+    pcs   # pcs constraint list --full 
     pcs   # pcs constraint remove cli-ban-Website-on-pcmk-1
 
-Removing a constraint in crmsh uses the same command as removing a
-resource.
+使用crmsh命令删除约束的方式与删除资源的命令一样
+Removing a constraint in crmsh uses the same command as removing a resource.
 
     crmsh # crm configure remove cli-ban-Website-on-pcmk-1
 
@@ -273,10 +278,11 @@ resources and constraints by type:
             master-max=1 master-node-max=1 \
             clone-max=2 clone-node-max=1 notify=true
 
-# Other operations
+# 其它操作
 
-## Batch changes
-
+## 批量修改配置信息
+    
+    # crmsh通过crm命令进入crmsh上下文模式，直接对CIB文档结构进行操作，最后再一次性commit
     crmsh # crm
     crmsh # cib new drbd_cfg
     crmsh # configure primitive WebData ocf:linbit:drbd params drbd_resource=wwwdata \
@@ -285,8 +291,8 @@ resources and constraints by type:
             clone-max=2 clone-node-max=1 notify=true
     crmsh # cib commit drbd_cfg
     crmsh # quit
-.
 
+    # pcs则先基于本地文件方式批量设置CIB参数，然后再通过push操作使配置生效
     pcs   # pcs cluster cib drbd_cfg
     pcs   # pcs -f drbd_cfg resource create WebData ocf:linbit:drbd drbd_resource=wwwdata \
             op monitor interval=60s
@@ -294,14 +300,14 @@ resources and constraints by type:
             clone-max=2 clone-node-max=1 notify=true
     pcs   # pcs cluster push cib drbd_cfg
 
-## Template creation
+## 创建模板（Template creation）
 
 Create a resource template based on a list of primitives of the same
 type
 
     crmsh # crm configure assist template ClusterIP AdminIP
 
-## Log analysis
+## 日志分析
 
 Display information about recent cluster events
 
