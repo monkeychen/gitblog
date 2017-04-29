@@ -18,66 +18,105 @@ Pacemaker的管理工具主要有两种：crmsh、pcs(Pacemaker/Corosync configu
 ## 显示配置信息
 以XML格式显示
 
-    crmsh # crm configure show xml
-    pcs   # pcs cluster cib
+```
+# crmsh 
+crm configure show xml
+# pcs 
+pcs cluster cib
+```
 
 以非XML格式显示[To show a simplified (non-xml) syntax]
 
-    crmsh # crm configure show
-    pcs   # pcs config
+```
+# crmsh
+crm configure show
+# pcs
+pcs config
+```
     
 ## 显示集群当前状态
 
-    crmsh # crm status
-    pcs   # pcs status
+```
+# crmsh
+crm status
+#pcs
+pcs status
+```
 
 也可以这样：
 
-    # crm_mon -1
+```
+crm_mon -1
+```
 
 ## 挂起节点（Node standby）
 
 使节点进入Standby状态（Put node in standby）
 
-    crmsh # crm node standby pcmk-1
-    pcs   # pcs cluster standby pcmk-1
+```
+# crmsh
+crm node standby pcmk-1
+# pcs
+pcs cluster standby pcmk-1
+```
 
 使节点从Standby状态恢复（Remove node from standby）
 
-    crmsh # crm node online pcmk-1
-    pcs   # pcs cluster unstandby pcmk-1
+```
+# crmsh
+crm node online pcmk-1
+# pcs
+pcs cluster unstandby pcmk-1
+```
 
 crm has the ability to set the status on reboot or forever. 
 pcs can apply the change to all the nodes.
 
 ## 设置集群全局属性
 
-    crmsh # crm configure property stonith-enabled=false
-    pcs   # pcs property set stonith-enabled=false
+```
+# crmsh
+crm configure property stonith-enabled=false
+# pcs
+pcs property set stonith-enabled=false
+```
 
 # 集群资源处理操作
 
 ## 列出所有RA(Resource Agent)的类别:`classes`
 
-    crmsh # crm ra classes
-    pcs   # pcs resource standards
+```
+# crmsh
+crm ra classes
+# pcs
+pcs resource standards
+```
 
 ## 列出所有可用的RA
 
-    crmsh # crm ra list ocf
-    crmsh # crm ra list lsb
-    crmsh # crm ra list service
-    crmsh # crm ra list stonith
-    pcs   # pcs resource agents ocf
-    pcs   # pcs resource agents lsb
-    pcs   # pcs resource agents service
-    pcs   # pcs resource agents stonith
-    pcs   # pcs resource agents
+```
+# crmsh
+crm ra list ocf
+crm ra list lsb
+crm ra list service
+crm ra list stonith
+
+# pcs
+pcs resource agents ocf
+pcs resource agents lsb
+pcs resource agents service
+pcs resource agents stonith
+pcs resource agents
+```
 
 您也可以通过`provider`进一步过滤：
 
-    crmsh # crm ra list ocf pacemaker
-    pcs   # pcs resource agents ocf:pacemaker
+```
+# crmsh
+crm ra list ocf pacemaker
+# pcs
+pcs resource agents ocf:pacemaker
+```
 
 ## 查询具体RA的描述信息
 
