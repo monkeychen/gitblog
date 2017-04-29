@@ -335,7 +335,7 @@ pcs constraint order promote WebSite then start AnotherIP
 crm configure location prefer-pcmk-1 WebSite 50: pcmk-1
 # pcs
 pcs constraint location WebSite prefers pcmk-1=50
-```    
+```
 
 With roles:
 
