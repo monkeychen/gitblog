@@ -5,14 +5,13 @@ categories: [HA]
 keywords: [HA,Pacemaker,crmsh,pcs]
 ---
 
-## 1. 概述
+# 概述
 
 Pacemaker的管理工具主要有两种：crmsh、pcs(Pacemaker/Corosync configuration system)，本文将同时介绍这两种命令行工具。
 > 从CentOS6.4以后开始采用PCS替代crmsh来管理pacemaker集群（PCS专用于pacemaker+corosync的设置工具，其有CLI和web-based GUI界面）
- 
-<!--More-->
+> 文档来源于Pacemaker的[Github官网](https://github.com/ClusterLabs/pacemaker/blob/master/doc/pcs-crmsh-quick-ref.md)
 
-## 2. 常用命令[（文档来源）](https://github.com/ClusterLabs/pacemaker/blob/master/doc/pcs-crmsh-quick-ref.md)
+<!--More-->
 
 # General Operations
 
