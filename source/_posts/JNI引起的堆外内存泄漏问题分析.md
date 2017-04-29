@@ -1,6 +1,7 @@
 title: JNI引起的堆外内存泄漏问题分析
 date: 2016-02-26 21:18:48
 tags: [Java, JNI]
+categories: [Java]
 keywords: [Java, JNI, Memory Leak, 内存泄漏]
 ---
 # 背景

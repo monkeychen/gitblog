@@ -1,6 +1,7 @@
 title: Java小问题汇总
 date: 2016-11-08 22:09:00
 tags: [Java,MySQL]
+categories: [Java]
 keywords: [JSON,中文乱码]
 ---
 ## 1. MySQL5.7下的JSON字段中文乱码问题
@@ -30,7 +31,7 @@ show full fields from ipms_device_feature
 ```
  
 结果如下：
-![mysql_json](/img/mysql_json.jpg)
+![mysql_json](http://oaivivmzx.bkt.clouddn.com/mysql_json.jpg)
 
 > 上图中`features`这个字段的`Collation`列为`Null`
 

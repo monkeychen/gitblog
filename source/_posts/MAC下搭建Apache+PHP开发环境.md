@@ -1,6 +1,7 @@
 title: MAC下搭建Apache+PHP开发环境
 date: 2016-07-01 23:18:57
 tags: [php,apache2]
+categories: [Php]
 keywords: [php,apache2,PhpStorm]
 ---
 
@@ -215,3 +216,5 @@ Step 2. 配置debug
 
 
 > 转载请注明出处：[cloudnoter.com](http://cloudnoter.com)
+
+

@@ -1,6 +1,7 @@
 title: Laravel 5.2中文文档：HTTP路由
 date: 2016-01-20 21:31:08
 tags: [php,laravel]
+categories: [Php]
 keywords: [php,laravel, laravel中文文档]
 ---
 # 基本路由

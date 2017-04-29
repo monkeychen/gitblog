@@ -1,6 +1,7 @@
 title: 嵌套删除SQL引起的死锁问题分析
 date: 2015-12-19 18:03:53
 tags: [MySQL,DeadLock]
+categories: [MySQL]
 keywords: [MySQL,DeadLock,死锁,数据库死锁]
 ---
 # 问题背景
