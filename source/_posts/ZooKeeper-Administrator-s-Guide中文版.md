@@ -132,7 +132,7 @@ ZooKeeper可靠性依赖于两个基本的假设：
 ### <span id="2.2"></span>Provisioning
 无
 
-### <span id="2.3"></span>ZooKeeper的强项与使用限制
+### <span id="2.3"></span>ZooKeeper的优势与局限
 无
 
 ### <span id="2.4"></span>管理
