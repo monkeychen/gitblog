@@ -82,8 +82,27 @@ java.util.RandomAccessSubList cannot be cast to java.util.ArrayList;
  list.add("c"); // 运行时异常。
  str[0]= "gujin"; // 则list.get(0)也会随之修改。
  ```
- 
-## 3. 待续...
+
+## 3. 新版Eclipse Neon运行Junit报NPE
+* **问题描述**：在Eclipse中创建单元测试用例（项目依赖的版本为junit-4.4）时，报如下错误
+
+```
+java.lang.NullPointerException
+	at org.eclipse.jdt.internal.junit4.runner.SubForestFilter.shouldRun(SubForestFilter.java:81)
+	at org.junit.internal.runners.JUnit4ClassRunner.filter(JUnit4ClassRunner.java:110)
+	at org.junit.runner.manipulation.Filter.apply(Filter.java:47)
+	at org.junit.internal.requests.FilterRequest.getRunner(FilterRequest.java:34)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestLoader.createFilteredTest(JUnit4TestLoader.java:77)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestLoader.createTest(JUnit4TestLoader.java:68)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestLoader.loadTests(JUnit4TestLoader.java:43)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:444)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:678)
+```
+* **原因分析**：新版Eclipse在启动单元测试用例时调用的是JUnit新版本的方法，即Eclipse已不支持junit4.9以下的版本。
+
+* **解决办法**：升级JUnit依赖版本即可 
+
+## 待续...
 
 
 > 转载请注明出处：[cloudnoter.com](http://cloudnoter.com)

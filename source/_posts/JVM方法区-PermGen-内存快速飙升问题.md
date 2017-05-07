@@ -51,3 +51,6 @@ atomikos大家应该都很清楚：JTA的一个实现，但是哪个组件调用
 原因定位到了，解决办法就很简单了：直接用阿里的druid替换掉。测试结果证明前面的分析是正确的。
 
 
+> 转载请注明出处：[cloudnoter.com](http://cloudnoter.com)
+
+
