@@ -173,36 +173,159 @@ ZK使用V1.2版本的Log4j作为其日志组件。ZK默认的日志配置文件�
 
 更多的信息见 [Log4j Default Initialization Procedure][7] 。
 
-### <span id="2.9"></span>Troubleshooting
-**Server not coming up because of file corruption**
-A server might not be able to read its database and fail to come up because of some file corruption in the transaction logs of the ZooKeeper server. You will see some IOException on loading ZooKeeper database. In such a case, make sure all the other servers in your ensemble are up and working. Use "stat" command on the command port to see if they are in good health. After you have verified that all the other servers of the ensemble are up, you can go ahead and clean the database of the corrupt server. Delete all the files in datadir/version-2 and datalogdir/version-2/. Restart the server.
+### <span id="2.9"></span>疑难解答
+**文件损坏导致服务器无法启动问题**
+ZK服务器可能会因无法正常读取数据导致启动失败。出现这个问题可能是因为ZK服务器上的事务日志文件损坏了。你可以从ZK的log4j日志中看到一些与ZK数据加载相关的`IOException`异常。在这种情况下，首先确保集群中的其他服务器能正常工作。可以使用`stat`命令查看它们是否处于健康状态。当你已经确认集群中其它服务器都在运行中，你可以进一步清理异常中断的服务器上的数据库：删除`$data_dir/version-2`目录与`$data_log_dir/version-2`目录下的内容，然后重启服务即可。
 
 ### <span id="2.10"></span>配置参数（高级配置）
-ZooKeeper's behavior is governed by the ZooKeeper configuration file. This file is designed so that the exact same file can be used by all the servers that make up a ZooKeeper server assuming the disk layouts are the same. If servers use different configuration files, care must be taken to ensure that the list of servers in all of the different configuration files match.
+ZooKeeper的行为是由其配置文件`$ZK_HOME\conf\zoo.cfg`来控制的。由于这个配置文件是设计好的，因此当ZK集群中每个成员的部署结构（磁盘路径等）都一样时，这个配置文件可以被所有成员共用。如果成员服务器使用不同的配置文件，一定要注意保证各个服务器的配置文件的服务器列表信息是匹配的。
 
-#### 最小配置
-Here are the minimum configuration keywords that must be defined in the configuration file:
+#### 最简（小）配置
+下面是部署一个ZK集群时，配置文件必须要设置的参数信息（最简配置）：
 **clientPort**
-the port to listen for client connections; that is, the port that clients attempt to connect to.
+客户端连接监听端口，即客户端发起连接请求时，都会尝试连接至ZK服务器的该端口。
 **dataDir**
-the location where ZooKeeper will store the in-memory database snapshots and, unless specified otherwise, the transaction log of updates to the database.
-> Be careful where you put the transaction log. A dedicated transaction log device is key to consistent good performance. Putting the log on a busy device will adversely effect performance.
+ZK内存数据库快照的保存位置，除非另有规定，否则事务日志也会保存至该位置。
+
+> 一定要注意事务日志的存储位置。一个专用的事务日志设备是保证高性能的关键。如果将事务日志存放于IO比较频繁的设备将产生不利的性能效果。
 
 **tickTime**
-the length of a single tick, which is the basic time unit used by ZooKeeper, as measured in milliseconds. It is used to regulate heartbeats, and timeouts. For example, the minimum session timeout will be two ticks.
+
+计时时间片长度（单位：毫秒），它是ZK中所有与时间有关参数的基本时间单元（即当某参数的值为X，则其语义可这样理解：某参数的值为tickTime的X倍）。它通常用于日常的心跳发送周期、超时时间等。
+比如，当`tickTime=2000,minSessionTimeout=2`，
+则会话超时的最小值为：`tickTime*minSessionTimeout=4000ms`。
 
 #### 高级配置
-The configuration settings in the section are optional. You can use them to further fine tune the behaviour of your ZooKeeper servers. Some can also be set using Java system properties, generally of the form zookeeper.keyword. The exact system property, when available, is noted below.
+本节所介绍的配置参数是可选的。你可以使用它们进一步调整ZK集群的行为。有些参数也可以通过形如`zookeeper.keyword`之类的Java系统属性的方式来配置。下面的参数详细介绍中有标明哪些参数可以通过Java系统属性方式配置。
+
 **dataLogDir**
-(No Java system property)
-This option will direct the machine to write the transaction log to the dataLogDir
-rather than the dataDir. This allows a dedicated log device to be used, and helps avoid competition between logging and snaphots.
-> Having a dedicated log device has a large impact on throughput and stable latencies. It is highly recommened to dedicate a log device and set dataLogDir to point to a directory on that device, and then make sure to point dataDir to a directory not residing on that device.
+
+这个选项会让机器将事务日志直接写到dataLogDir所指定的位置，而不再是默认的dataDir。这将允许使用专用的日志设备，同时可有效避免快照操作与日志操作所带来的IO竞争。
+
+> 使用专用的日志设备将极大的影响系统吞吐量与系统时延。强烈推荐使用专用的日志设备，并将dataLogDir指向该专用设备的一个目录，然后也要确保dataDir参数所指向的目录未指向专用的日志设备。
 
 **globalOutstandingLimit**
-(Java system property: zookeeper.globalOutstandingLimit.)
-Clients can submit requests faster than ZooKeeper can process them, especially if there are a lot of clients. To prevent ZooKeeper from running out of memory due to queued requests, ZooKeeper will throttle clients so that there is no more than globalOutstandingLimit outstanding requests in the system. The default limit is 1,000.
+(Java系统属性: zookeeper.globalOutstandingLimit)
 
+客户端提交的请求数通过会比ZK的处理速度快，特别是存在大量客户端连接的情况。为了防止因队列中的请求数多过导致ZK运行过程中出现内存溢出问题，ZK将控制客户端的请求数，这样将可以保证系统请求数不会多于`globalOutstandingLimit`参数所指定的值，系统默认值为1000。
+
+**preAllocSize**
+(Java系统属性: zookeeper.preAllocSize)
+
+To avoid seeks ZooKeeper allocates space in the transaction log file in blocks of preAllocSize kilobytes. The default block size is 64M. One reason for changing the size of the blocks is to reduce the block size if snapshots are taken more often. (Also, see snapCount).
+
+**snapCount**
+(Java系统属性: zookeeper.snapCount)
+
+ZK将事务写入事务日志文件中。当`snapCount`个事务被写入日志文件后，ZK将创建一个快照，然后一个新的事务日志文件会被创建。该参数的默认值为:100000。
+
+**maxClientCnxns**
+
+限制同一个客户端连接（通过IP标识唯一性）至一个ZK集群节点的并发连接数（Socket级别）。这个参数主要是用来防止某些类型的DoS攻击，包括`file-descriptor exhaustion`。该参数默认值为60，如果设置为0则意味着关闭并发控制限制功能。
+
+**clientPortAddress**
+
+**V3.3.0引入**: 客户端连接监听地址（IPv4,IPv6,主机名）， 这个参数是可选的。默认情况下，所有连接至`clientPort`参数指定端口号的连接都会被接受，不管这些连接是来自于哪个网络接口。
+
+**minSessionTimeout**
+
+**V3.3.0引入**: 最小会话超时时间（毫秒），在会话期间服务器将允许来自客户端的协商。该参数默认值为2倍的tickTime。
+
+**maxSessionTimeout**
+
+**V3.3.0引入**: 最小会话超时时间（毫秒），在会话期间服务器将允许来自客户端的协商。该参数默认值为20倍的tickTime。
+
+**fsync.warningthresholdms**
+(Java系统属性: zookeeper.fsync.warningthresholdms)
+
+**V3.3.4引入**: 当事务日志(WAL)中的`fsync`操作时间超过该参数所设置的值时，一个告警信息将被输出到log4j日志中。该参数默认值为1000毫秒，该值只能通过系统属性的方式设置。
+
+**autopurge.snapRetainCount**
+
+**V3.4.0引入**: 当启用该参数时，ZK将仅保留dataDir与dataLogDir目录下最近的快照及事务日志数据，保留的数量由该参数设置值决定；然后清除其它过期数据。默认值为3，最小值为3。
+
+**autopurge.purgeInterval**
+
+**V3.4.0引入**: 以小时为单位的时间间隔，即每隔N小时将触发一次快照及事务日志清理任务。设置一个正数（大于等于1）即可启用自动清理功能，默认值为0。
+
+**syncEnabled**
+(Java系统属性: zookeeper.observer.syncEnabled)
+
+**V3.4.6, V3.5.0引入**: 集群中角色为observer的成员实时的将事务日志与快照数据写回磁盘，就好像它们是业务的参与者一样。这将减少这些成员的重启恢复时间。如果将这个参数设置为`false`，将禁用这个特性。默认为`true`。
+
+**与集群有关的参数选项**
+本节所介绍的参数选项主要用于服务器集群中，也就是说当部署一个集群时可以使用这些参数。
+
+**electionAlg**
+
+配置集群使用的选举算法。0值代表基于UDP的版本，1值代表基于UDP的无认证的快速Leader选举版本，2值代表基于UDP的有认证的快速Leader选举版本，3值代表基于TCP快速Leader选举版本。算法3为默认值。
+
+> 0，1，2三个leader选举的实现方案现已被废弃。我们计划在下一个版本中移除，也就是说后续只有`FastLeaderElection`可用。
+
+**initLimit**
+
+允许集群中follower节点连接及同步数据至leader节点的时间耗时（以tickTime为单位）。如果由ZK管理的数据量比较大，则可以按需增加这个值。
+
+**leaderServes**
+(Java系统属性: zookeeper.leaderServes)
+
+配置集群中的leader节点是否接受客户端连接，默认为`yes`。Leader节点主要负责协调集群节点之间数据的更新。对于与协调更新有关的吞吐量远高于客户端的读请求的吞吐量，则leader节点可设置为不接受客户端的连接请求，而专注于协调集群节点间的数据更新。默认值为`yes`意味着leader节点默认情况下将会接受客户端的连接请求。
+
+> 当集群超过3个以上的节点时，推荐打开这个开关。
+
+**server.x=[hostname]:nnnnn[:nnnnn]**
+
+ZK集群由多个服务器节点组成。当服务器节点启动时，ZK到$data_dir目录下找到`myid`文件，并根据里面内容确定其身份编号及连接端口信息。`myid`文件中包含当前服务器节点的编号（以ASCII格式呈现），这个编号与上述配置参数`server.x`中的`x`匹配的则为当前服务器节点的IP与监听端口。
+
+配置参数中的服务器列表信息必须与ZK集群服务器节点的一一匹配。
+
+配置参数中有两个端口号，第一个端口用于follower节点与leader节点间的通信，第二个端口用于集群leader选举。只有`electionAlg`参数值为非0值时，选举用的端口号（第二个）才是必须的。若`electionAlg`参数值为0值时，则第二个端口号是非必要的。如果你想在单机上测试多个服务器，则可以使用不同的端口号。
+
+**syncLimit**
+
+允许集群follower节点与leader节点进行数据同步的总耗时（以tickTime为单位）。如果follower的数据与leader的数据由于同步不及时导致差异太大，则这些follower节点将被移出集群。
+
+**group.x=nnnnn[:nnnnn]**
+
+Enables a hierarchical quorum construction."x"是组编号，而"="右边则是用":"分隔的服务器编号。每组的服务器成员编号不能有交集，同时所有组的节点成员的并集刚好是集群的所有成员。
+
+ 你可在[这里][8]找到使用的例子。
+
+**weight.x=nnnnn**
+
+与"group"参数搭配使用。它为集群中的每个成员提供一个权值，这个权值在进行进行法定人数选举投票时会用到。There are a few parts of ZooKeeper that require voting such as leader election and the atomic broadcast protocol. By default the weight of server is 1. If the configuration defines groups, but not weights, then a value of 1 will be assigned to all servers.
+
+你可在[这里][8]找到使用的例子。
+
+**cnxTimeout**
+(Java系统属性: zookeeper.cnxTimeout)
+
+为leader选举通知消息而打开的连接设置一个超时时间。只有`electionAlg`值为3时这个参数才有用。默认值为5秒。
+
+**4lw.commands.whitelist**
+(Java系统属性: zookeeper.4lw.commands.whitelist)
+
+**V3.4.10引入**: 这个属性包含了一系统用逗号分隔的由4个字符组成的命令列表。它之所以被引入是为了提供更灵活的粒度控制机制来决定哪些ZK命令可以执行。因此借助这个参数，用于可以根据需要来关闭某些命令。默认情况下，若未指定该参数，则除了`wchp`与`wchc`以外的命令都可以执行。如果配置了该参数，则只有参数中列出的命令可以执行（被连接的客户端调用执行）。
+
+下面是一个只启用了`stat,ruok,conf,isro`命令的配置：
+`4lw.commands.whitelist=stat, ruok, conf, isro`
+
+用户也可以使用通配符来进行配置，如：
+`4lw.commands.whitelist=*`
+
+**认证与授权参数选项**
+本节介绍的内容主要是用于配置认证/授权相关功能的。
+
+**zookeeper.DigestAuthenticationProvider.superDigest**
+(Java系统属性: zookeeper.DigestAuthenticationProvider.superDigest)，只能通过Java系统属性方式配置。
+
+该特性默认是禁用的
+
+**V3.2版引入**: Enables a ZooKeeper ensemble administrator to access the znode hierarchy as a "super" user. In particular no ACL checking occurs for a user authenticated as super.
+
+org.apache.zookeeper.server.auth.DigestAuthenticationProvider can be used to generate the superDigest, call it with one parameter of `super:<password>`. Provide the generated `super:<data>` as the system property value when starting each server of the ensemble.
+
+When authenticating to a ZooKeeper server (from a ZooKeeper client) pass a scheme of "digest" and authdata of `super:<password>`. Note that digest auth passes the authdata in plaintext to the server, it would be prudent to use this authentication method only on localhost (not over the network) or over an encrypted connection.
 
 ### <span id="2.11"></span>ZK命令：4个字母
 ZooKeeper responds to a small set of commands. Each command is composed of four letters. You issue the commands to ZooKeeper via telnet or nc, at the client port. Three of the more interesting commands: "stat" gives some general information about the server and connected clients, while "srvr" and "cons" give extended details on server and connections respectively.
@@ -269,22 +392,23 @@ imok
 ```
 
 
-### <span id="2.12"></span>Data File Management
+### <span id="2.12"></span>数据文件管理
 ZooKeeper stores its data in a data directory and its transaction log in a transaction log directory. By default these two directories are the same. The server can (and should) be configured to store the transaction log files in a separate directory than the data files. Throughput increases and latency decreases when transaction logs reside on a dedicated log devices.
 
-#### The Data Directory
+#### 数据目录
 This directory has two files in it:
+
 * myid - contains a single integer in human readable ASCII text that represents the server id.
-* snapshot.<zxid> - holds the fuzzy snapshot of a data tree.
+* `snapshot.<zxid>` - holds the fuzzy snapshot of a data tree.
 
 Each ZooKeeper server has a unique id. This id is used in two places: the myid file and the configuration file. The myid file identifies the server that corresponds to the given data directory. The configuration file lists the contact information for each server identified by its server id. When a ZooKeeper server instance starts, it reads its id from the myid file and then, using that id, reads from the configuration file, looking up the port on which it should listen.
 
 The snapshot files stored in the data directory are fuzzy snapshots in the sense that during the time the ZooKeeper server is taking the snapshot, updates are occurring to the data tree. The suffix of the snapshot file names is the zxid, the ZooKeeper transaction id, of the last committed transaction at the start of the snapshot. Thus, the snapshot includes a subset of the updates to the data tree that occurred while the snapshot was in process. The snapshot, then, may not correspond to any data tree that actually existed, and for this reason we refer to it as a fuzzy snapshot. Still, ZooKeeper can recover using this snapshot because it takes advantage of the idempotent nature of its updates. By replaying the transaction log against fuzzy snapshots ZooKeeper gets the state of the system at the end of the log.
 
-#### The Log Directory
+#### 日志目录
 The Log Directory contains the ZooKeeper transaction logs. Before any update takes place, ZooKeeper ensures that the transaction that represents the update is written to non-volatile storage. A new log file is started each time a snapshot is begun. The log file's suffix is the first zxid written to that log.
 
-#### File Management
+#### 文件管理
 The format of snapshot and log files does not change between standalone ZooKeeper servers and different configurations of replicated ZooKeeper servers. Therefore, you can pull these files from a running replicated ZooKeeper server to a development machine with a standalone ZooKeeper server for trouble shooting.
 
 Using older log and snapshot files, you can look at the previous state of ZooKeeper servers and even restore that state. The LogFormatter class allows an administrator to look at the transactions in a log.
@@ -293,29 +417,26 @@ The ZooKeeper server creates snapshot and log files, but never deletes them. The
 
 > The data stored in these files is not encrypted. In the case of storing sensitive data in ZooKeeper,necessary measures need to be taken to prevent unauthorized access. Such measures are external to ZooKeeper (e.g., control access to the files) and depend on the individual settings in which it is being deployed.
 
-### <span id="2.13"></span>Things to Avoid
+### <span id="2.13"></span>避免踩坑
+
 Here are some common problems you can avoid by configuring ZooKeeper correctly:
 
-**inconsistent lists of servers**
+**服务器列表数据不一致**
 The list of ZooKeeper servers used by the clients must match the list of ZooKeeper servers that each ZooKeeper server has. Things work okay if the client list is a subset of the real list, but things will really act strange if clients have a list of ZooKeeper servers that are in different ZooKeeper clusters. Also, the server lists in each Zookeeper server configuration file should be consistent with one another.
 
 **incorrect placement of transasction log**
 The most performance critical part of ZooKeeper is the transaction log. ZooKeeper syncs transactions to media before it returns a response. A dedicated transaction log device is key to consistent good performance. Putting the log on a busy device will adversely effect performance. If you only have one storage device, put trace files on NFS and increase the snapshotCount; it doesn't eliminate the problem, but it should mitigate it.
 
-**incorrect Java heap size**
+**Java堆大小配置不正确**
 You should take special care to set your Java max heap size correctly. In particular, you should not create a situation in which ZooKeeper swaps to disk. The disk is death to ZooKeeper. Everything is ordered, so if processing one request swaps the disk, all other queued requests will probably do the same. the disk. DON'T SWAP.
 
 Be conservative in your estimates: if you have 4G of RAM, do not set the Java max heap size to 6G or even 4G. For example, it is more likely you would use a 3G heap for a 4G machine, as the operating system and the cache also need memory. The best and only recommend practice for estimating the heap size your system needs is to run load tests, and then make sure you are well below the usage limit that would cause the system to swap.
 
-**Publicly accessible deployment**
-A ZooKeeper ensemble is expected to operate in a trusted computing environment. It is thus recommended to deploy ZooKeeper behind a firewall.
+**暴露在公网**
+一个ZK集群应该部署在一个可靠的计算环境中，因此推荐部署在防火墙后面。
 
 ### <span id="2.14"></span>最佳实践
 For best results, take note of the following list of good Zookeeper practices: For multi-tennant installations see the section detailing ZooKeeper "chroot" support, this canbe very useful when deploying many applications/services interfacing to a single ZooKeeper cluster.
-
-
-
-> 转载请注明出处：[cloudnoter.com](http://cloudnoter.com)
 
 
 [1]: https://zookeeper.apache.org/doc/r3.4.10/zookeeperStarted.html
@@ -325,4 +446,5 @@ For best results, take note of the following list of good Zookeeper practices: F
 [5]: https://zookeeper.apache.org/doc/r3.4.10/zookeeperProgrammers.html
 [6]: https://zookeeper.apache.org/doc/r3.4.10/api/index.html
 [7]: http://logging.apache.org/log4j/1.2/manual.html#defaultInit
+[8]: http://zookeeper.apache.org/doc/r3.4.10/zookeeperHierarchicalQuorums.html
 
