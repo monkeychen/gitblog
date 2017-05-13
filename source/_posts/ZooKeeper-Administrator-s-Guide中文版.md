@@ -101,13 +101,13 @@ $ bin/zkCli.sh -server 127.0.0.1:2181
 * [维护](#2.5)
 * [Supervision](#2.6)
 * [Monitoring](#2.7)
-* [Logging](#2.8)
-* [Troubleshooting](#2.9)
-* [Configuration Parameters](#2.10)
-* [ZooKeeper Commands: The Four Letter Words](#2.11)
-* [Data File Management](#2.12)
-* [Things to Avoid](#2.13)
-* [Best Practices](#2.14)
+* [日志](#2.8)
+* [疑难解答](#2.9)
+* [配置参数（高级配置）](#2.10)
+* [ZooKeeper命令: 4字符命令](#2.11)
+* [数据文件管理](#2.12)
+* [避免踩坑](#2.13)
+* [最佳实践](#2.14)
 
 ### ZooKeeper集群部署规划<span id="2.1"></span>
 ZooKeeper可靠性依赖于两个基本的假设：
@@ -327,7 +327,7 @@ org.apache.zookeeper.server.auth.DigestAuthenticationProvider can be used to gen
 
 When authenticating to a ZooKeeper server (from a ZooKeeper client) pass a scheme of "digest" and authdata of `super:<password>`. Note that digest auth passes the authdata in plaintext to the server, it would be prudent to use this authentication method only on localhost (not over the network) or over an encrypted connection.
 
-### <span id="2.11"></span>ZK命令：4个字母
+### <span id="2.11"></span>ZK命令：4字符命令
 ZooKeeper可以响应一个小规模的命令集。命令集中的每个命令由4个字母组成。
 你可以通过nc或telnet向ZooKeeper服务器的客户端监听端口发送命令。其中有三个命令是比较令人感兴趣的：`stat`会输出与服务器、已连接的客户端相关的基本信息；`srvr`与`cons`会输出服务器与各个连接的进一步的详细信息。
 
