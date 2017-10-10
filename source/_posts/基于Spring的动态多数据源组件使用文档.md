@@ -5,6 +5,20 @@ categories: [Java]
 keywords: [Spring, SpringBoot]
 ---
 
+## 项目源码
+
+[https://github.com/monkeychen/xspring](https://github.com/monkeychen/xspring)
+
+> xspring是个组件集，后续会不断增加新的通用组件，本文所介绍的动态多数据源组件位于xspring项目的xspring-data模块中，其maven坐标如下(尚未上传至maven中央库)：
+
+```
+<dependency>
+    <groupId>org.xspring</groupId>
+    <artifactId>xspring-data</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+</dependency>
+```
+
 ## 设计目标
 
 * 无须定义繁琐的配置信息，使用方只需要提供基本的JDBC连接参数即可
@@ -20,7 +34,7 @@ keywords: [Spring, SpringBoot]
 ## 关键类图
 
 
-## 参数资料:SpringBoot配置文件加载顺序及属性优先级
+## 参考资料:SpringBoot配置文件加载顺序及属性优先级
 参考：http://www.importnew.com/17673.html
 https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#resources
 
