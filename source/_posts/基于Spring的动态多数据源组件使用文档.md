@@ -190,6 +190,74 @@ xspring.datasource.jdbc.2.poolFilters=stat
     }
 ```
 
+使用示例见单元测试类：`DynamicDataSourceTest, DemoServiceImpl`
+
+```
+// DemoServiceImpl源码：
+@Component("demoService")
+public class DemoServiceImpl implements DemoService {
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Override
+    @TargetDataSource("ds_mysql")
+    public void printClassroomList() {
+        List list = jdbcTemplate.queryForList("SELECT * FROM classroom");
+        System.out.println(list);
+    }
+
+    @Override
+    @TargetDataSource("ds_postgresql")
+    public void printUserList() {
+        List list = jdbcTemplate.queryForList("SELECT * FROM t_user");
+        System.out.println(list);
+    }
+}
+
+// DynamicDataSourceTest源码（启动配置类）：
+@Configuration
+@ImportResource("classpath:/config/xspring-context-test.xml")
+public class DynamicDataSourceTest {
+    private ApplicationContext applicationContext;
+
+    private DemoService demoService;
+    @Before
+    public void setUp() throws Exception {
+        applicationContext = XspringApplication.startup(DynamicDataSourceTest.class, null);
+        demoService = applicationContext.getBean("demoService", DemoService.class);
+    }
+
+    @Test
+    public void testDynamicDataSource() throws Exception {
+        demoService.printClassroomList();
+        demoService.printUserList();
+    }
+}
+
+```
+
+自定义的XML配置文件`xspring-context-test.xml`内容如下：
+
+```
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+    <context:component-scan base-package="org.xspring" />
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+</beans>
+```
+
 ## 关键类图
 
 待补充
