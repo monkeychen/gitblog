@@ -109,10 +109,51 @@ public ConfigurableApplicationContext run(Class<?> annotatedClass, String[] args
 ### xspring-data组件
 xspring-data组件的模块定义（启动）类为：`XspringDataConfiguration`，其会通过`@Import(DataSourceInitializer.class)`方式加载动态数据源初始化配置类。`DataSourceInitializer`也是一个`@Configurable`注解类，其通过`@Bean`的方式定义了`datasource`这个动态数据源。
 
-在动态数据源bean创建过程中，组件会通过SPI方式加载DataSourceFactory这个接口的实现类来获取具体的数据库连接池提供方，框架默认提供了DruidDataSourceFactory。
+在动态数据源bean创建过程中，组件会通过SPI方式加载`DataSourceFactory`这个接口的实现类来获取具体的数据库连接池提供方，框架默认提供了`DruidDataSourceFactory`。
 您也可以自己提供数据库连接池的实现类（同样定义在各个组件的`classpath:/META-INF/spring.factories`文件中），并通过添加`org.springframework.core.annotation.Order`注解来指定加载优先级。
 
+`DataSourceInitializer`会从属性文件`datasource.properties`中加载JDBC配置信息，然后通过`DataSourceFactory`实现类创建相关的数据库连接池（真正的数据源）实例。
+`datasource.properties`文件加载位置如下（先后顺序）：
+> * file:./config/datasource.properties
+> * classpath:/config/datasource.properties
+
+框架默认提供的Druid数据库连接池所使用的`datasource.properties`文件内容大致如下（不同的数据库连接池提供方则会有所差别）：
+
+```
+# 数据源个数
+xspring.datasource.jdbc.max=2
+
+# 默认数据源编号
+xspring.datasource.jdbc.default=1
+
+# 第一个数据源
+xspring.datasource.jdbc.1.name=ds_mysql
+xspring.datasource.jdbc.1.driverClassName=com.mysql.jdbc.Driver
+xspring.datasource.jdbc.1.url=jdbc:mysql://localhost:3306/mooc?useUnicode=true&characterEncoding=UTF8
+xspring.datasource.jdbc.1.username=root
+xspring.datasource.jdbc.1.password=*****
+xspring.datasource.jdbc.1.initialSize=10
+xspring.datasource.jdbc.1.minPoolSize=5
+xspring.datasource.jdbc.1.maxPoolSize=10
+xspring.datasource.jdbc.1.maxWait=60000
+xspring.datasource.jdbc.1.poolFilters=stat
+
+# 第二个数据源
+xspring.datasource.jdbc.2.name=ds_postgresql
+xspring.datasource.jdbc.2.driverClassName=org.postgresql.Driver
+xspring.datasource.jdbc.2.url=jdbc:postgresql://localhost:5432/blog
+xspring.datasource.jdbc.2.username=postgres
+xspring.datasource.jdbc.2.password=*****
+xspring.datasource.jdbc.2.initialSize=10
+xspring.datasource.jdbc.2.minPoolSize=5
+xspring.datasource.jdbc.2.maxPoolSize=10
+xspring.datasource.jdbc.2.maxWait=60000
+xspring.datasource.jdbc.2.poolFilters=stat
+
+```
+
 > **注意：xspring-data组件的动态多数据源目前只支持相同数据库连接池提供方，即只会使用order值最小的`DataSourceFactory`实现类来创建真正的数据源对象。**
+
 
 源码如下：
 
