@@ -32,7 +32,7 @@ keywords: [Spring, SpringBoot]
 * 基于AOP及注解实现数据源动态切换
 
 ### xspring-core组件
-core组件是所有其他组件的基础，其提供了通用的事件总线、日志管理等功能。其中`XspringApplication`是整个框架的启动类，通过调用这个启动类的startup静态方法，并提供您打上`@org.springframework.beans.factory.annotation.Configurable`注解的启动类来启动您的应用。
+core组件是所有其他组件的基础，其提供了通用的事件总线、日志管理等功能。其中`XspringApplication`是整个框架的启动类，通过调用这个启动类的startup静态方法，并提供您打上`@org.springframework.context.annotation.Configuration`注解的启动类来启动您的应用。
 
 > 框架启动时按如下顺序加载配置文件
 > * file:./config/env.properties
@@ -69,7 +69,7 @@ public static ConfigurableApplicationContext startup(Class<?> annotatedClass, St
 }
 ```
 
-在`run`方法中，框架会通过SPI方式加载其他组件提供的标注有`@Configurable`注解的`org.xspring.core.extension.ModuleConfiguration`接口实现类，从而启动其他组件。
+在`run`方法中，框架会通过SPI方式加载其他组件提供的标注有`@Configuration`注解的`org.xspring.core.extension.ModuleConfiguration`接口实现类，从而启动其他组件。
 
 SPI声明统一存放在各个组件的`classpath:/META-INF/spring.factories`文件中，整个加载过程源码如下：
 
