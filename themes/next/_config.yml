@@ -299,15 +299,15 @@ baidu_analytics: d08aa5fb4a0152d38b6afc7b4dbade86
 
 # Disqus
 disqus:
-  enable: false
-  shortname:
+  enable: true
+  shortname: cloudnoter
   count: true
 
 # Hypercomments
 #hypercomments_id:
 
 # Gentie productKey f310f312511948d2b2c4b6e8a5f9c6c7
-gentie_productKey: f310f312511948d2b2c4b6e8a5f9c6c7 
+#gentie_productKey: f310f312511948d2b2c4b6e8a5f9c6c7 
 
 # changyan
 changyan:
