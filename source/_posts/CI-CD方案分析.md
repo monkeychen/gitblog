@@ -14,6 +14,8 @@ keywords: [devops, CI, CD, 持续集成, 持续交付, 持续部署]
 
 DevOps出现以前，开发与运维对于生产环境上出现的问题是这样处理的：
 
+<!--More-->
+
 运维人员：
 
 ![It's not my machine](http://oaivivmzx.bkt.clouddn.com/devops-ops-say.png)
