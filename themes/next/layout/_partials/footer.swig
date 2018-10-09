@@ -6,6 +6,7 @@
     <i class="fa fa-{{ theme.authoricon }}"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">{{ config.author }}</span>
+  <span>&nbsp;<a href="http://www.miitbeian.gov.cn">闽ICP备18023112号</a></span>
 </div>
 
 {% if theme.copyright %}
