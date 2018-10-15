@@ -21,9 +21,11 @@ keywords: [Maven,SpringBoot]
 * import这个scope是后面引入的新scope，其只能用于`<dependencyManagement>`中且类型为pom的依赖项，个人感觉其主要作用在于对依赖版本进行分类管理。
 * Maven依赖冲突的解决策略，可以参考[这里](https://www.jianshu.com/p/f6ca45865025)
 
-## 2. `build`配置
-### 2.1. Maven项目的标准目录结构
 
+<!--More-->
+
+## 2. Maven构建配置
+### 2.1. Maven项目的标准目录结构
 
 * src
     * main
@@ -51,8 +53,7 @@ keywords: [Maven,SpringBoot]
 * NOTICE.txt
 * README.txt
 
-
-### 2.2. `resources`节点
+### 2.2. 资源处理相关配置
 构建Maven项目的时候，如果没有进行特殊的配置，Maven会按照标准的目录结构查找和处理各种类型文件。
 
 > **src/main/java和src/test/java**
@@ -227,15 +228,81 @@ keywords: [Maven,SpringBoot]
 
 > 一定要注意与`maven-assemble-plugin`插件区别开来，因为`assemble`也涉及到配置文件的拷贝。
 
-### 2.3. `plugin`节点
-* 介绍
+### 2.3. 测试相关插件配置
+本文章所讲的测试主要是指单元测试与集成测试：
 
-#### 2.3.1. 常用插件
-* maven-resources-plugin
+* Maven通过`maven-surefire-plugin`插件执行单元测试
+* Maven通过`maven-failsafe-plugin`插件执行集成测试
 
-* maven-compiler-plugin
+#### 2.3.1. 单元测试配置
+在pom.xml中配置JUnit，TestNG测试框架的依赖，即可自动识别和运行`src/test/Java`目录下利用该框架编写的测试用例。常用配置如下：
 
-* maven-surefire-plugin
+```
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>2.18.1</version>
+    <configuration>
+        <!-- 在构建过程中如需要跳过单元测试阶段，则将skipTests节点值设置为true -->
+        <skipTests>true</skipTests>
+        
+        <!-- 忽略测试失败以继续构建项目，不推荐 -->
+        <testFailureIgnore>true</testFailureIgnore>
+    </configuration>
+</plugin>
+```
+
+当然，如果你明确用的是`JUnit4.7`及以上版本，可以明确声明：
+
+```
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>2.19</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven.surefire</groupId>
+            <artifactId>surefire-junit47</artifactId>
+            <version>2.19</version>
+        </dependency>
+    </dependencies>
+</plugin>
+```
+
+surefire默认的查找测试类的模式如下：
+
+* `**/Test*.java`
+* `**/*Test.java`
+* `**/*TestCase.java`
+
+如果由于历史原因，测试类不符合默认的三种命名模式，可以通过pom.xml设置`maven-surefire-plugin`插件添加命名模式或排除一些命名模式。
+
+```
+<plugin>  
+    <groupId>org.apache.maven.plugins</groupId>  
+    <artifactId>maven-surefire-plugin</artifactId>  
+    <version>2.5</version>  
+    <configuration>  
+        <includes>  
+            <include>**/*Tests.java</include>  
+        </includes>  
+        <excludes>  
+            <exclude>**/*ServiceTest.java</exclude>  
+            <exclude>**/TempDaoTest.java</exclude>  
+        </excludes>  
+    </configuration>  
+</plugin>
+```
+
+> 更详细的配置可直接参考[surefire插件官网](http://maven.apache.org/surefire/maven-surefire-plugin/)
+
+#### 2.3.2. 集成测试配置
+
+> 待续......
+
+* maven-failsafe-plugin
+
+#### 2.3.3. 打包相关配置
 
 * maven-jar-plugin
 
@@ -245,18 +312,22 @@ keywords: [Maven,SpringBoot]
 
 * maven-assembly-plugin
 
+#### 2.3.4. 依赖分析相关配置
+
 * maven-dependency-plugin
 
-* maven-failsafe-plugin
-
 * maven-enforcer-plugin
+
+#### 2.3.5. SpringBoot插件配置
 
 * spring-boot-maven-plugin
 
 ## 3. profile配置
+
 > 通过profile中定义的property，基于工程中的properties模板生成最终的properties文件。
 
 ## 4. 实战案例
+
 > 使用Maven搭建一个基于SpringBoot的工程介绍，及搭建过程中踩过的坑。
 
 * 使用`import scope`引入`spring-boot-dependencies`时无法引用POM中定义的property、pluginManagement等一系列[问题][2]
@@ -269,5 +340,7 @@ keywords: [Maven,SpringBoot]
 [2]: https://stackoverflow.com/questions/40606267/how-does-importing-maven-dependencies-impact-plugin-management
 [3]: http://www.infoq.com/cn/maven-practice
 [4]: https://www.amazon.cn/dp/B009WMAZX4
+[5]: http://maven.apache.org/plugins/index.html
+
 
 
