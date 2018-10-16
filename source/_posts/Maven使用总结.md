@@ -838,7 +838,7 @@ mvn install -Pdev
 * 操作系统配置（例如，Windows family）
 * 现存/缺失文件
 
-> **注意：**profile节点下`<properties>`中定义的属性值会覆盖其所在pom文件中定义的同名的全局属性。
+> **注意：**profile节点下定义的元素都会覆盖其所在Pom文件中定义的同名的节点，如同名plugin，properties中的同名属性等。
 
 ### Spring框架的profile机制与Maven的profile机制的区别
 
