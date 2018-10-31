@@ -138,7 +138,7 @@ docker exec -it -u ssh_ovirt ovirt-engine-dev /env/start-engine-service.sh
 ## 1.7. ovirt-engine部署目录介绍
 ovirt-engine平台部署在wildfly(jboss)服务器上，但其并不是采用wildfly官方所描述的标准部署方式及部署结构，其使用一套自己的部署目录结构，如下：
 
-![Dir-Tree](http://oaivivmzx.bkt.clouddn.com/engine-deploy-dir-tree.png)
+![Dir-Tree](http://img.simiam.com/engine-deploy-dir-tree.png)
 
 这些目录与`wildfly`环境的关联关系
 

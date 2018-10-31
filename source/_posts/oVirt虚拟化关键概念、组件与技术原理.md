@@ -16,7 +16,7 @@ ovirt-engine为虚拟化环境提供了一个集中管理的平台，用户可�
 
 ovirt-engine架构图如下：
 
-![ovirt-engine架构图](http://oaivivmzx.bkt.clouddn.com/ovirt-engine-infra.png)
+![ovirt-engine架构图](http://img.simiam.com/ovirt-engine-infra.png)
 
 * 应用服务器（ovirt-Wildfly）
 
@@ -75,7 +75,7 @@ ovirt_engine_history：该数据库保存了配置信息和各种性能统计数
 
 ovirt-node的主机核心架构图如下：
 
-![ovirt-node架构图](http://oaivivmzx.bkt.clouddn.com/ovirt-node-infra.png)
+![ovirt-node架构图](http://img.simiam.com/ovirt-node-infra.png)
 
 * KVM(Kernel-based Virtual Machine)
 
@@ -123,7 +123,7 @@ ovirt虚拟化平台使用一个集中的存储系统来保存虚拟磁盘镜像
 ### 1.5. 网络简介
 ovirt虚拟化环境的网络架构提供该环境中不同对象间的网络连接，同时它还可以用来实现网络隔离。其网络架构图如下：
 
-![ovirt网络架构图](http://oaivivmzx.bkt.clouddn.com/ovirt-engine-network.png)
+![ovirt网络架构图](http://img.simiam.com/ovirt-engine-network.png)
 
 用来处理虚拟机间网络连接的逻辑网络是通过计算节点上的基于软件的网桥实现的。在默认情况 下，ovirt-engine在安装过程中会创建一个名为“ovirtmgmt管理网络”的逻辑网络。此外系统管理员还可以添加专用的存储逻辑网络和专用的显示逻辑网络。
 
@@ -133,7 +133,7 @@ ovirt虚拟化环境的网络架构提供该环境中不同对象间的网络连
 
 下图是常见存储服务类型的系统层级分布图：
 
-![存储类型系统层级分布图](http://oaivivmzx.bkt.clouddn.com/storage-service-type.jpg)
+![存储类型系统层级分布图](http://img.simiam.com/storage-service-type.jpg)
 
 我们从底层往上看，最底层就是硬盘，多个硬盘可以做成RAID组，无论是单个硬盘还是RAID组，都可以做成PV，多个PV物理卷捏在一起构成卷组（VG）。接下来可以从卷组上切出很多个逻辑卷（LV）。到LV这一层为止，数据一直都是以块（Block）的形式存在的，这时候提供出来的服务就是块存储服务。你可以通过FC协议或者iSCSI协议访问LV，映射到主机端本地，成为一个裸设备。在主机端可以直接在上面安装数据库，也可以格式化成文件系统后交给应用程序使用，这时候就是一个标准的SAN存储设备的访问模式，**网络间传送的是块**。
 
@@ -238,7 +238,7 @@ ovirt-engine在启动时会将每个数据中心中的存储域配置信息下�
 
 下图是V3版元数据存储目录结构示意图：
 
-![V3版元数据存储目录结构示意图](http://oaivivmzx.bkt.clouddn.com/storage-metadata-tree-descr.png)
+![V3版元数据存储目录结构示意图](http://img.simiam.com/storage-metadata-tree-descr.png)
 
 **注意：** 文件存储类型的存储域与块设备类型的存储域的元数据存储位置是不同的，块设备类型存储域的元数据是存放在主存储域（马上到！）对应的卷组（VG）的标签（Tag）中，而不是dom_md目录下的metadata文件中。dom_md/metadata存放的是该存储域下虚拟机磁盘镜像（LV）的元数据集，每个虚拟机磁盘镜像（LV）的元数据存放在metadata块设备存储空间的某一个索引位置上，该索引位置信息则保存在虚拟机磁盘镜像所在的逻辑卷（LV）的标签（Tag）上。
 
@@ -258,7 +258,7 @@ ovirt虚拟化平台使用元数据来描述存储域的内部结构。结构元
 
 下图是存储域元数据读写数据流示意图：
 
-![存储域元数据读写数据流示意图](http://oaivivmzx.bkt.clouddn.com/storage-metadata-io.png)
+![存储域元数据读写数据流示意图](http://img.simiam.com/storage-metadata-io.png)
 
 SPM负责协调数据中心内所有存储域元数据的变更操作，比如创建删除磁盘镜像、创建合并快照、在存储域之间复制镜像、创建虚拟机模板、块设备存储分配等。一个数据中心只能有一个SPM主机，数据中心中的其它主机对存储域元数据信息只有读权限。
 
@@ -413,7 +413,7 @@ ovirt虚拟化平台默认使用的是mode-4。绑定模式详细介绍请看[�
 
 集群层的网络对象包括：集群、逻辑网络。常见的集群内网络拓扑图如下：
 
-![集群内的网络拓扑图](http://oaivivmzx.bkt.clouddn.com/cluster-network-topo.png)
+![集群内的网络拓扑图](http://img.simiam.com/cluster-network-topo.png)
 
 一个数据中心就是由多个集群组成的一个逻辑组，而一个集群则是由多个主机组成的一个逻辑组。上图中“集群内的网络拓扑图” 展示了一个集群中所包括的项。
 
@@ -443,7 +443,7 @@ ovirt-engine为虚拟机逻辑网络所创建的网桥设备需要和主机上�
 
 典型的逻辑网络拓扑如下图：
 
-![典型的逻辑网络拓扑图](http://oaivivmzx.bkt.clouddn.com/cluster-logical-network-ovirtmgmt.png)
+![典型的逻辑网络拓扑图](http://img.simiam.com/cluster-logical-network-ovirtmgmt.png)
 
 ##### Required网络
 
@@ -484,21 +484,21 @@ ovirt-engine为虚拟机逻辑网络所创建的网桥设备需要和主机上�
 
 在ovirt虚拟化环境中最简单的配置为“网桥 + 网卡”的配置，如下图。它通过网桥将一个或多个虚拟机连接至主机的物理网卡。
 
-![网桥与网卡配置](http://oaivivmzx.bkt.clouddn.com/host-config-bridge.png)
+![网桥与网卡配置](http://img.simiam.com/host-config-bridge.png)
 
 这种配置的一个实例就是安装ovirt-engine时自动创建的ovirtmgmt网桥。在安装的过程中，ovirt-engine在主机上安装 VDSM，VDSM的安装过程中会创建ovirtmgmt网桥。ovirtmgmt网桥可以获得主机的IP地址来实现主机的管理网络功能。
 
 #### VLAN配置
 下图展示了基于VLAN的另一种可选配置：
 
-![基于VLAN的网桥与网卡配置](http://oaivivmzx.bkt.clouddn.com/host-config-bridge-vlan.png)
+![基于VLAN的网桥与网卡配置](http://img.simiam.com/host-config-bridge-vlan.png)
 
 通过使用VLAN为这个网络中的数据传输提供了一个安全的通道。另外，使用多个VLAN还可以实现把多个网桥连接到一个网卡的功能。
 
 #### 网桥与Bond配置
 下图所显示的配置中包括一个网络Bond，多个主机网卡通过Bond和同一个网桥和网络进行连接。
 
-![基于Bond的网桥与网卡配置](http://oaivivmzx.bkt.clouddn.com/host-config-bridge-bond.png)
+![基于Bond的网桥与网卡配置](http://img.simiam.com/host-config-bridge-bond.png)
 
 通过Bond创建了一个逻辑连接来把两个(或更多)物理网卡（NIC）连接起来。这种配置可以提供网卡容错、增加网络带宽等特性，具体取决于所配置的bond-mode。
 
@@ -506,12 +506,12 @@ ovirt-engine为虚拟机逻辑网络所创建的网桥设备需要和主机上�
 #### 多网桥、多VLAN与单网卡配置
 下图所显示的配置把一个网卡连接到两个VLAN（这需要网络交换机的配合，相应的上联口需要配置为trunk模式）。主机使用两个独立的vNIC来分别处理两个VLAN网络数据，而每个VLAN会通过vNIC连接到不同的网桥中。在此基础上，每个网桥可以被多个虚拟机使用。
 
-![多网桥+多VLAN+单网卡配置](http://oaivivmzx.bkt.clouddn.com/host-config-bridge-multi-vlan.png)
+![多网桥+多VLAN+单网卡配置](http://img.simiam.com/host-config-bridge-multi-vlan.png)
 
 #### 多网桥、多VLAN与单Bond配置
 下图所显示的使用多个网卡组成一个Bond设备来连接到多个VLAN的配置视图。
 
-![多网桥+多VLAN+单Bond配置](http://oaivivmzx.bkt.clouddn.com/host-config-bridge-vlan-bond.png)
+![多网桥+多VLAN+单Bond配置](http://img.simiam.com/host-config-bridge-vlan-bond.png)
 
 这个配置中的VLAN通过Bond设备和网卡进行连接。每个VLAN连接到不同的网桥，每个网桥可以连接一个或多个虚拟机。
 
@@ -641,7 +641,7 @@ ovirt-engine使用隔离代理(fence agent)来和电源管理设备进行交流�
 
 #### 5.1.2. 负载均衡策略：均匀分布（Evenly_Distributed）
 
-![Evenly_Distributed](http://oaivivmzx.bkt.clouddn.com/load-balance-policy-evenly-distributed.png)
+![Evenly_Distributed](http://img.simiam.com/load-balance-policy-evenly-distributed.png)
 
 Evenly_Distributed这个策略是指：ovirt-engine通过选择CPU的负载最低或可用内存量最大的主机来运行一个新的虚拟机的策略。具体选择哪个指标（CPU负载或内存可用量）及指标的值，则由该策略的配置参数决定。
 
@@ -651,7 +651,7 @@ Evenly_Distributed策略与VM_Evenly_Distributed策略的区别是：前者基�
 
 #### 5.1.3. 负载均衡策略：节能（Power_Saving）
 
-![Power_Saving](http://oaivivmzx.bkt.clouddn.com/load-balance-policy-power-saving.png)
+![Power_Saving](http://img.simiam.com/load-balance-policy-power-saving.png)
 
 这个策略会把新虚拟机运行在CPU和内存利用率最低的主机上。
 
@@ -678,7 +678,7 @@ Evenly_Distributed策略与VM_Evenly_Distributed策略的区别是：前者基�
 
 ### 5.2. 高可用性虚拟机资源预留
 
-![功能示意图](http://oaivivmzx.bkt.clouddn.com/ovirt-cluster-ha-reservation.png)
+![功能示意图](http://img.simiam.com/ovirt-cluster-ha-reservation.png)
 
 具有高可用性(HA)虚拟机资源预留策略可以使ovirt-engine监控集群资源的使用情况，从而可以保证在需要的时候为高可以性虚拟机提供有效的资源。ovirt-engine可以把虚拟机标识为“高可用性”，在需要的时候，这些虚拟机可以在其它主机上重启。在高可用性虚拟机资源预留功能被启用时，ovirt-engine会为高可用性虚拟机预留一些资源，以防在主机故障的情况下，这些高可用虚拟机需要进行迁移时，能保证集群中有足够的资源来完成迁移操作。
 
@@ -730,11 +730,11 @@ ovirt-engine使用迁移来实现集群的负载均衡策略，当集群中的�
 在ovirt虚拟化环境中，第一次为一个虚拟机创建快照和以后为这个虚拟机创建后续快照的过程不同。虚拟机的第一个快照会保留镜像格式(QCOW2或RAW)，它把当前存在的卷作为一个基础镜像（母镜像）。后续的快照只是一个附加的COW层，它只记录当前系统和前一个快照中的变化。
 在ovirt虚拟化环境中，一个虚拟机通常使用RAW磁盘镜像(除非在创建时使用了“精简(thin)"镜像，或用户指定使用QCOW2格式)。下图所示，创建的快照会包括虚拟磁盘的镜像，它将作为后续快照的基本镜像。
 
-![第一次为VM创建快照](http://oaivivmzx.bkt.clouddn.com/vm-snapshot-create-init.png)
+![第一次为VM创建快照](http://img.simiam.com/vm-snapshot-create-init.png)
 
 在第一个快照创建以后再创建的快照将只创建一个新的COW卷，这个卷包括了当前系统和前一个快照间的变化。每个新的COW层在开始时都只包括COW元数据，而后续使用和操作虚拟机所产生的变化数据会被添加到这个新的COW层中。如果虚拟机需要修改前一个COW层的数据时，相应的数据会从前一层中读出，并把变化的数据写到新的COW层中。虚拟机在定位数据时会以从最新到最老的顺序在各个COW中查找。
 
-![非第一次为VM创建快照](http://oaivivmzx.bkt.clouddn.com/vm-snapshot-create-post.png)
+![非第一次为VM创建快照](http://img.simiam.com/vm-snapshot-create-post.png)
 
 #### 6.1.2. 预览快照
 
@@ -746,14 +746,14 @@ ovirt-engine使用迁移来实现集群的负载均衡策略，当集群中的�
 
 在快照预览完成后，管理员可以选择`Undo`来删除在预览过程中创建的预览层。这时虽然预览层会被删除，原来保存快照的层还会保留。
 
-![快照预览](http://oaivivmzx.bkt.clouddn.com/vm-snapshot-preview.png)
+![快照预览](http://img.simiam.com/vm-snapshot-preview.png)
 
 
 #### 6.1.3. 删除快照
 
 当快照不再需要时，您可以删除它们。删除快照后，您将无法把虚拟机恢复到这些快照所包括的时间点上。删除快照并不一定会获得更多的可用存储空间，而这些快照的数据也不一定会被实际删除。例如，您的虚拟机有5个快照，如果您删除了第3个快照，第3个快照中的数据可能仍然会存在在系统中，因为第4和第5个快照可能会需要这些数据（只有第3个快照中已变更的数据才会被删除，已变更的数据存在于第4个快照或第5个快照）。一般情况下，删除快照通常可以提高虚拟机的性能。
 
-![快照删除](http://oaivivmzx.bkt.clouddn.com/vm-snapshot-delete.png)
+![快照删除](http://img.simiam.com/vm-snapshot-delete.png)
 
 快照删除会被作为一个异步的块任务处理，VDSM会为虚拟机在恢复文件中维护一个操作记录，从而使此任务可以被跟踪，即使在进行操作期间VDSM被重启或虚拟机被关闭时任务也可以被跟踪。当操作开始后，正被删除的快照将不能被预览，或作为一个恢复点(即使删除操作失败或被中断)。
 

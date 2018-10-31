@@ -56,7 +56,7 @@ stdci.yml, automation.yml, seaci.yml, ovirtci.yml
 ## 2. DevOps平台
 ### 全局流程图
 
-![ovirt-devops全局流程图](http://oaivivmzx.bkt.clouddn.com/ovirt-devops.png)
+![ovirt-devops全局流程图](http://img.simiam.com/ovirt-devops.png)
 
 > Jenkins持续集成系统有一个核心概念：任务（也称为Job），我们通常所说的搭建Jenkins持续集成环境其实就是创建一系列的任务并指定触发任务执行的条件（事件），在某一指定的事件被Jenkins系统捕获后，它将执行相应的任务，这一过程就是一次集成。
 
@@ -79,11 +79,11 @@ Jenkins-Job管理是指通过UI或JJB的方式在Jenkins上创建、更新、删
 > 实现原理也相对简单：因为Jenkins-Job定义了一系列持续集成任务，因此也可以再增加一个特殊的任务，这个任务就是JenkinsJobDeploy，一旦该任务被执行，它就会从Jenkins-Job定义Git仓库下载最新的任务定义脚本并更新Jenkins系统上的任务。
 
 #### 2.1.1. Jenkins任务初始化流程
-![Jenkins任务初始化流程](http://oaivivmzx.bkt.clouddn.com/jenkins-job-init.png)
+![Jenkins任务初始化流程](http://img.simiam.com/jenkins-job-init.png)
 
 #### 2.1.2. Jenkins任务管理自动化流程
 
-![Jenkins任务管理自动化流程](http://oaivivmzx.bkt.clouddn.com/jenkins-job-mgmt.png)
+![Jenkins任务管理自动化流程](http://img.simiam.com/jenkins-job-mgmt.png)
 
 ### 2.2. ovirt持续集成
 oVirt每个子项目的持续集成流程并无特殊之处，都根据Jenkins上的任务配置步骤依次执行相关脚本：编译、单元测试、构建、部署测试环境、系统测试、发行。

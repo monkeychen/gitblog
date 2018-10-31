@@ -10,7 +10,7 @@ keywords: [devops, CI, CD, 持续集成, 持续交付, 持续部署]
 
 随着软件发布迭代的频率越来越高，传统的“瀑布型”（开发—测试—发布）模式已经不能满足快速交付的需求。2009年左右DevOps（Development和Operations的组合）应运而生，简单地来说，就是更好的优化开发(DEV)、测试(QA)、运维(OPS)的流程，开发运维一体化，通过高度自动化工具与流程来使得软件构建、测试、发布更加快捷、频繁和可靠。
 
-![DevOps的组成](http://oaivivmzx.bkt.clouddn.com/what-is-devops.jpg)
+![DevOps的组成](http://img.simiam.com/what-is-devops.jpg)
 
 DevOps出现以前，开发与运维对于生产环境上出现的问题是这样处理的：
 
@@ -18,27 +18,27 @@ DevOps出现以前，开发与运维对于生产环境上出现的问题是这�
 
 运维人员：
 
-![It's not my machine](http://oaivivmzx.bkt.clouddn.com/devops-ops-say.png)
+![It's not my machine](http://img.simiam.com/devops-ops-say.png)
 
 开发人员：
 
-![It's not my code](http://oaivivmzx.bkt.clouddn.com/devops-dev-say.png)
+![It's not my code](http://img.simiam.com/devops-dev-say.png)
 
 处理问题的模式：（未进行有效沟通，而是相互责备、报怨，在经过长时间的各种扯皮后把问题解决了）
 
-![Before apply DevOps](http://oaivivmzx.bkt.clouddn.com/before-devops.png)
+![Before apply DevOps](http://img.simiam.com/before-devops.png)
 
 DevOps出现以后，开发与运维的关系转变为：
 
-![Think for peer](http://oaivivmzx.bkt.clouddn.com/devops-love.png)
+![Think for peer](http://img.simiam.com/devops-love.png)
 
 因此，他们对于生产环境上出现的问题是这样处理的：
 
-![Think for peer](http://oaivivmzx.bkt.clouddn.com/devops-together.png)
+![Think for peer](http://img.simiam.com/devops-together.png)
 
 处理问题的模式变为：（相互理解，充分沟通并最终快速解决问题）
 
-![After apply DevOps](http://oaivivmzx.bkt.clouddn.com/after-devops.png)
+![After apply DevOps](http://img.simiam.com/after-devops.png)
 
 
 ### 1.1. DevOps生命周期
@@ -47,17 +47,17 @@ DevOps集文化理念、实践和工具于一身，可以提高组织高速交�
 
 DevOps是一个完整的面向IT运维的工作流，以IT自动化以及持续集成（CI）、持续部署（CD）为基础，来优化程式开发、测试、系统运维等所有环节，其典型的运作流程如下：
 
-![DevOps-lifecycle](http://oaivivmzx.bkt.clouddn.com/devops-lifecycle.png)
+![DevOps-lifecycle](http://img.simiam.com/devops-lifecycle.png)
 
 上图中的`Build, Test, Release`对应的CI/CD平台中的构建、测试、交付（部署）这几个概念，也就是说CI/CD是实施DevOps的基础，除此之外还会涉及源码质量管理平台（静态代码分析、潜在BUG分析、单元测试覆盖报表等）。
 
 实施DevOps前，软件开发管理生命周期如下：
 
-![before apply devops](http://oaivivmzx.bkt.clouddn.com/devops-old-way.png)
+![before apply devops](http://img.simiam.com/devops-old-way.png)
 
 实施DevOps后，软件开发管理生命周期如下：
 
-![after apply devops](http://oaivivmzx.bkt.clouddn.com/devops-new-way.png)
+![after apply devops](http://img.simiam.com/devops-new-way.png)
 
 ### 1.2. 适用场景
 
@@ -90,7 +90,7 @@ DevOps涉及到源码质量管理、持续集成、持续交付、持续部署�
 
 下图为持续集成的主要流程：
 
-![Continuous Integration](http://oaivivmzx.bkt.clouddn.com/continuous-integration-flow.png)
+![Continuous Integration](http://img.simiam.com/continuous-integration-flow.png)
 
 引入持续集成的好处：
 
@@ -102,7 +102,7 @@ DevOps涉及到源码质量管理、持续集成、持续交付、持续部署�
 
 持续交付(Continuous Delivery)是指在持续集成的基础上，将集成后的代码部署到更贴近真实运行环境的“准生产环境”（production-like）中。 比如，我们完成单元测试后，可以把代码部署到连接数据库的Staging环境中进行更多的测试。如果代码没有问题，可以继续手动部署到生产环境中。
 
-![Continuous Delivery](http://oaivivmzx.bkt.clouddn.com/continuous-delivery-flow.png)
+![Continuous Delivery](http://img.simiam.com/continuous-delivery-flow.png)
 
 由上图可知，从开发一直到项目可交付整个过程中涉及的环境可能有：开发环境、测试环境（包括压测环境）、准生产环境，生产环境，这整个过程也常被称为部署管道（Deployment Pipeline），每个环境所执行的测试用例也将不一样，只有前一个环境的测试用例全部通过才能继续进入下一个环境（即自动部署新环境 + 执行适合该环境的测试用例）；同时每个环境的执行结果都会及时反馈给相应的开发人员，如果环境部署异常或用例执行失败他们就能更容易更及时的解决问题。
 
@@ -114,7 +114,7 @@ DevOps涉及到源码质量管理、持续集成、持续交付、持续部署�
 
 持续部署(Continuous Deploy)是在持续交付的基础上，把部署到生产环境的过程自动化。持续部署和持续交付的区别就是最终部署到生产环境是自动化的。
 
-![Continuous Deployment](http://oaivivmzx.bkt.clouddn.com/continuous-deployment-flow.png)
+![Continuous Deployment](http://img.simiam.com/continuous-deployment-flow.png)
 
 这里大家也许有个疑问：在生产环境是否需要执行测试用例，如果需要执行，那会否影响系统性能或产生脏数据？
 
@@ -140,7 +140,7 @@ DevOps涉及到源码质量管理、持续集成、持续交付、持续部署�
 
 通用指标分析结果：
 
-![CI/CD平台比对](http://oaivivmzx.bkt.clouddn.com/ci-platform-compare.png)
+![CI/CD平台比对](http://img.simiam.com/ci-platform-compare.png)
 
 上面的分析结果中，排除掉非开源与收费版的，就只剩下Jenkins，Gitlab CI，Go CD，Flow CI四个版本，而flow.ci为国内开源项目，根据国内开源项目的尿性（基本都是先开源后收费），个人认为也不适合使用Flow CI。那么就只剩下三个可选方案了。
 
@@ -177,7 +177,7 @@ SonarQube既可以本地安装也可以选择托管在云端，云端托管�
 
 可用的SonarQube管理平台：[SonarQube Demo](http://172.21.192.216:9000/)
 
-![SonarQube截图](http://oaivivmzx.bkt.clouddn.com/sonarqube-demo.png)
+![SonarQube截图](http://img.simiam.com/sonarqube-demo.png)
 
 #### Jenkins + CheckStyle + FindBug
 Jenkins，CheckStyle，FindBug三者配合起来能够实现最基本代码分析需求，但其分析结果展现还需要再配合其他插件来实现，同时其展示界面比较古老，本质上讲该功能是依附于Jenkins的，并不是一个独立的代码质量管理平台。
@@ -189,7 +189,7 @@ Jenkins，CheckStyle，FindBug三者配合起来能够实现最基本代码分�
 
 对于自动化测试首先需要保证其功能是对客户有价值的和正确可用的。而这一切的基础就是用例要能测试客户的需求，期望，最好能让客户参与到测试用例的开发过程中来或让客户评审测试用例，因此出现了ATDD、BDD等各种理论方法来支撑这一行为。现有很多自动化测试工具可支持ATDD、BDD等，比如Cucumber、RobotFramework、SpecFlow、JBehave、Fitness、Concordion、Guage等，其中Cucumber和RobotFramework是最流行的两个框架，本文将简单分析这两个框架（想要完全搞懂这两个框架还是需要安排相关资源投入分析）：
 
-![Cucumber VS RobotFramework](http://oaivivmzx.bkt.clouddn.com/cucumber-robot-compare.png)
+![Cucumber VS RobotFramework](http://img.simiam.com/cucumber-robot-compare.png)
 
 #### 3.3.2. 单元测试Mock框架
 
