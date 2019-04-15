@@ -21,6 +21,8 @@ Node内部采用Google公司的V8引擎，作为JavaScript语言解释器；通�
 * 安装方式一：访问官方网站nodejs.org或者github.com/nodesource/distributions，查看Node的最新版本和安装方法。
 * 安装方式二：通过官方网站提供编译好的各平台下的二进制包，可以把它们解压到/usr/local/lib/nodejs目录下面，具体过程如下：
 
+<!--More-->
+
 ```
 # 如macOS下的二进制包
 sudo mkdir -p /usr/local/lib/nodejs
