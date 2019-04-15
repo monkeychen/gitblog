@@ -1,5 +1,5 @@
 title: VUE学习笔记：环境准备
-date: 2018-08-17 09:39:43
+date: 2019-04-15 09:39:43
 tags: [vue,npm]
 categories: [前端]
 keywords: [npm,vue,node,前端开发]
