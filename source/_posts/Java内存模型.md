@@ -17,6 +17,6 @@ keywords: [JVM,内存模型]
 
 > 转载请注明出处：[simiam.com][1]
 
-[1]: http://cloudnoter.com
+[1]: http://simiam.com
 
 
