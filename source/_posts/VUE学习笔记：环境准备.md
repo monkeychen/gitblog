@@ -18,7 +18,7 @@ Node内部采用Google公司的V8引擎，作为JavaScript语言解释器；通�
 
 ## 1.1. 安装与更新
 
-* 安装方式一：访问官方网站nodejs.org或者github.com/nodesource/distributions，查看Node的最新版本和安装方法。
+* 安装方式一：访问官方网站[nodejs.org][6]或者[github.com/nodesource/distributions][7]，查看Node的最新版本和安装方法。
 * 安装方式二：通过官方网站提供编译好的各平台下的二进制包，可以把它们解压到/usr/local/lib/nodejs目录下面，具体过程如下：
 
 <!--More-->
@@ -195,10 +195,18 @@ $ nvm deactivate
 
 > 转载请注明出处：[simiam.com][1]
 
+---
+分享一个朋友的人工智能教程。零基础！通俗易懂！风趣幽默！希望你也加入到人工智能的队伍中来！[点击浏览教程][5]
+
+
 [1]: http://simiam.com
 [2]: http://javascript.ruanyifeng.com/nodejs/npm.html
 [3]: http://www.ruanyifeng.com/blog/2016/01/npm-install.html
 [4]: http://www.ruanyifeng.com/blog/2019/02/npx.html
+[5]: http://www.captainbed.net/blog-free
+[6]: https://nodejs.org/en/
+[7]: https://github.com/nodesource/distributions
+
 
 
 
