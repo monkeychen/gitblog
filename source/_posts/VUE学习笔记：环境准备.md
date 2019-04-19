@@ -136,6 +136,41 @@ $ npm -v
 $ npm config list -l
 ```
 
+## 2.2. cnpm工具
+由于众所周知的原因，我们被墙的厉害，所以使用npm下载模块时候会发现效率真的很慢，所以推荐[淘宝的NPM镜像][8]。
+
+> [淘宝的NPM镜像][8]是一个完整`npmjs.org`镜像，你可以用此代替官方版本（只读），同步频率目前为10分钟一次以保证尽量与官方服务同步。
+
+**使用方式1**：在使用npm命令时指定`registry`参数值为`https://registry.npm.taobao.org`
+
+```
+# 通过在使用npm命令时指定`registry`参数值为`https://registry.npm.taobao.org`
+npm install <module_name> --registry=https://registry.npm.taobao.org
+```
+
+**使用方式2**：以linux系统为例，在`用户目录`或`工程项目根目录`下创建文件`.npmrc`，并添加如下内容：
+
+```
+registry=https://registry.npm.taobao.org/
+```
+
+* 此后使用npm命令就不需要指定`registry`参数了，因为npm会优先从项目根目录或用户目录下的`.npmrc`文件中获取`registry`值。
+* 当前用户目录与项目根目录下的`.npmrc`文件的`registry`值可以设置成不同的URL。
+* 在执行npm命令时，如果当前目录是项目目录，则项目根目录中的`.npmrc`文件的优先级更高。
+
+**使用方式3**：我们可能通过安装`cnpm`模块来使用淘宝的NPM镜像，安装命令如下：
+
+```
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+```
+
+cnpm安装成功以后，就可以直接使用cnpm来安装模块，简单便捷。
+
+## 2.3. npm私有仓库
+在企业内部，为了使前端组件化开发更高效，搭建NPM私有仓库是一个不错的选择。安装教程网上很多，本文不再详情介绍，请参考如下文章：
+
+> npm私有仓库安装指南：[Nexus上搭建npm本地服务器][9]
+
 # 3. 版本管理工具nvm
 
 如果想在同一台机器，同时安装多个版本的node.js，就需要用到版本管理工具nvm。
@@ -208,6 +243,8 @@ $ nvm deactivate
 [5]: http://www.captainbed.net/blog-free
 [6]: https://nodejs.org/en/
 [7]: https://github.com/nodesource/distributions
+[8]: https://npm.taobao.org/
+[9]: https://www.jianshu.com/p/9085f47726a2
 
 
 
