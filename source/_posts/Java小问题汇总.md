@@ -100,7 +100,28 @@ java.lang.NullPointerException
 ```
 * **原因分析**：新版Eclipse在启动单元测试用例时调用的是JUnit新版本的方法，即Eclipse已不支持junit4.9以下的版本。
 
-* **解决办法**：升级JUnit依赖版本即可 
+* **解决办法**：升级JUnit依赖版本即可
+
+## Windows下修改tomcat配置
+
+```
+# 将tomcat安装成window后台服务：
+service.bat install tomcat8-cza
+
+# 卸载服务
+service.bat remove tomcat8-cza
+
+# 配置JVM内存参数
+cd <tomcat_home>/bin
+tomcat8w.exe //MS/tomcat8-cza
+# 在桌面右下角可以看到tomcat8w.exe的服务管理图标，点击“配置”，选择“java”标签，即可修改JVM参数。
+``` 
+
+## 获取echarts地图中各地区的经纬度信息
+
+```
+echarts.getMap('福州').geoJson.features.forEach(function(item){console.log('"' + item.properties.name + '"' + ": [" + item.properties.cp + "],")});
+```
 
 ## 待续...
 
