@@ -7,7 +7,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">{{ config.author }}</span>
   <span>&nbsp;
-    <a href="http://www.miitbeian.gov.cn">
+    <a href="http://beian.miit.gov.cn">
       <p style="float:left; height:20px;line-height:20px;margin: 7px 0px 0px 5px; color:#939393;">闽ICP备18023112号</p>
     </a>
   </span>
